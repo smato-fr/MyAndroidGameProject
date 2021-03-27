@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_280sdp"
+    android:layout_height="@dimen/_400sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_10sdp"
+    android:background="@color/lightGray">
+
+    <EditText
+        android:id="@+id/search_text"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_toLeftOf="@id/search_text"
+        android:hint="@string/username"
+        style="@style/DefaultTextStyle"
+        android:textColor="@color/black"
+        />
+
+    <ImageButton
+        android:id="@+id/search_btn"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@drawable/ic_search"
+        android:layout_toRightOf="@id/search_text"
+        android:layout_marginLeft="@dimen/_20sdp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/search_text"
+        android:layout_above="@id/close_btn"/>
+
+    <ImageButton
+        android:id="@+id/close_btn"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:background="@drawable/ic_close"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        />
+
+</RelativeLayout>

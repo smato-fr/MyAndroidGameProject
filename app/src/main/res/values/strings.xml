@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Mendax\'s story</string>
+    <string name="firebase_url">https://liegameproject-default-rtdb.firebaseio.com/</string>
+
+    <string name="pass">Continuer</string>
+    <string name="register">Créer un compte:</string>
+    <string name="login">Se connecter:</string>
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="passConfirm">Confirmation du mot de passe</string>
+
+    <string name="error_allFields">Veuillez remplir tous les champs !</string>
+    <string name="error_register">Email ou mot de passe invalide</string>
+    <string name="error_entry_long_username">Pseudo trop long ! (15 max)</string>
+    <string name="error_entry_short_password">Minimun 6 caractères pour le mot de passe</string>
+    <string name="error_entry_different_password">Les mots de passe sont différents !</string>
+    <string name="error_login">Connexion échouée!</string>
+
+    <string name="title_shop">Magasin:</string>
+    <string name="friends">Amis</string>
+    <string name="clan">Club</string>
+    <string name="msg_send">Envoyer un message</string>
+    <string name="search_user">Trouver des amis !</string>
+    <string name="friend_invite_send">Envoyer une demande d\'ami</string>
+    <string name="game_chat_salon">Salle d\'attente</string>
+    <string name="error">Une erreur est survenue !</string>
+</resources>
