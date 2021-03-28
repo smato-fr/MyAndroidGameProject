@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import fr.smato.gameproject.DataBaseManager;
 import fr.smato.gameproject.game.model.enums.GameState;
 import fr.smato.gameproject.game.model.utils.GameViewI;
 
@@ -36,11 +37,11 @@ public class Client {
 
                 else if (state == GameState.starting) {
                     game.onStart();
+                    start();
                 }
 
                 else if (state == GameState.playing) {
                     game.onPlay();
-                    
                 }
             }
 
@@ -54,6 +55,23 @@ public class Client {
 
 
     public void start() {
+
+            ref.child("infos").child("timer").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (game.getState() != GameState.starting) {
+                        ref.child("infos").child("timer").removeEventListener(this);
+                    }
+
+                    int timer = snapshot.getValue(int.class);
+                    ((WaitingGameView) game).getWaitingText().setText("Démarrage dans "+ timer + "s...");
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    DataBaseManager.onError();
+                }
+            });
 
     }
 }

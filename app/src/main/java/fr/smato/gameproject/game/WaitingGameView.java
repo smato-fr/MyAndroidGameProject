@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -68,8 +69,12 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
     private Map<String, Player> players = new HashMap<>();
 
     private Hoster hoster;
-    private Button playButton;
+
     private Client client;
+
+    //GUI above
+    private Button playButton;
+    private TextView waitingText;
 
     //gameManagement
     private GameState state = GameState.waiting;
@@ -153,6 +158,8 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
                     p.resize((int) resizerH(40));
                     players.put(userId, p);
                 }
+
+                waitingText.setText(players.size() + " joueur(s) connecté(s)");
             }
 
             @Override
@@ -191,6 +198,17 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
         //load client
        client = new Client(this);
        client.init();
+
+        //GUI on FrameLayout
+        waitingText = new Button(getContext());
+        waitingText.setText(players.size() + " joueur(s) connecté(s)");
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+        params.bottomMargin = 100;
+        getGameActivity().getGameWidgets().addView(waitingText, params);
+
 
         setFocusable(true);
     }
@@ -246,14 +264,11 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
             e.draw(canvas);
         }
 
-        //gui
+        //gui on surfaceView
         joyStick.draw(canvas);
         actionButton.draw(canvas);
         drawUPS(canvas);
         drawFPS(canvas);
-
-        //draw game
-        drawGame(canvas);
     }
 
 
@@ -374,18 +389,17 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
 
 
 
-    //TODO GAME MANAGER
     public void onWait() {
         state = GameState.waiting;
     }
 
     public void onStart() {
         state = GameState.starting;
-
     }
 
     public void onPlay() {
         state = GameState.playing;
+        getGameActivity().onPlay();
     }
 
     @Override
@@ -397,36 +411,6 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
     public void setState(GameState state) {
         this.state = state;
     }
-
-
-    private void drawGame(Canvas canvas) {
-
-        if (state == GameState.waiting) {
-
-
-            Paint paint = new Paint();
-            int color = ContextCompat.getColor(getContext(), R.color.colorPrimaryLight);
-            paint.setColor(color);
-            paint.setTextSize((float) resizerW(40));
-            canvas.drawText("En attente - "+ (players.size() + 1) + " joueur(s)", (int) resizerW(350), (int) resizerH(880), paint);
-
-
-        } else if (state == GameState.starting) {
-
-            Paint paint = new Paint();
-            int color = ContextCompat.getColor(getContext(), R.color.colorPrimaryLight);
-            paint.setColor(color);
-            paint.setTextSize((float) resizerW(40));
-            canvas.drawText("Démarrage... - "+ (players.size() + 1) + " joueur(s)", (int) resizerW(350), (int) resizerH(880), paint);
-
-        } else if (state == GameState.playing) {
-
-
-
-        }
-
-    }
-
 
 
 
@@ -463,4 +447,7 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
         return (GameActivity) getCurrentContext();
     }
 
+    public TextView getWaitingText() {
+        return waitingText;
+    }
 } // class GameView

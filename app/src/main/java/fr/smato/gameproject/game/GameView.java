@@ -160,12 +160,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         //load hoster if is
         if (host) {
             hoster = new Hoster(this);
-            hoster.init();
         }
 
         //load client
         client = new Client(this);
-        client.init();
 
         setFocusable(true);
     }

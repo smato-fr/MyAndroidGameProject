@@ -36,9 +36,35 @@ public class Hoster {
 
 
     public void start() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("state", "starting");
-        game.getReference().child("infos").updateChildren(map);
+        game.getReference().child("infos").child("state").setValue("starting");
+
+        new Thread(new Runnable() {
+
+            private int timer = 10;
+
+            @Override
+            public void run() {
+
+                while (timer > 0) {
+                    game.getReference().child("infos").child("timer").setValue(timer);
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    timer--;
+                }
+
+                play();
+            }
+        }, "game-start").start();
+    }
+
+    private void play() {
+
+        game.getReference().child("infos").child("state").setValue("playing");
+
     }
 
 
