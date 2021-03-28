@@ -57,6 +57,7 @@ public abstract class Level {
     }
 
     public boolean isSolidTile(int y, int x) {
+        if (x >= mapWidht || y >= mapHeight) return false;
 
         return tileMap[y][x] != 0;
 

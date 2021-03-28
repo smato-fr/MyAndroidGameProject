@@ -8,7 +8,9 @@ import com.google.firebase.database.DatabaseReference;
 
 import fr.smato.gameproject.activities.game.GameActivity;
 import fr.smato.gameproject.game.map.MapManager;
+import fr.smato.gameproject.game.model.drawable.PlayerEntity;
 import fr.smato.gameproject.game.model.enums.GameState;
+import fr.smato.gameproject.game.model.objects.Player;
 import fr.smato.gameproject.popup.GameMessagePopup;
 
 public interface GameViewI {
@@ -38,4 +40,6 @@ public interface GameViewI {
     GameMessagePopup getChatPopup();
     Context getContext();
     GameActivity getGameActivity();
+
+    PlayerEntity getPlayer();
 }

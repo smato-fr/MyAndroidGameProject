@@ -27,6 +27,8 @@ import fr.smato.gameproject.DataBaseManager;
 import fr.smato.gameproject.R;
 import fr.smato.gameproject.activities.game.GameActivity;
 import fr.smato.gameproject.game.map.MapManager;
+import fr.smato.gameproject.game.map.levels.FirstGameLevel;
+import fr.smato.gameproject.game.map.levels.SecondGameLevel;
 import fr.smato.gameproject.game.map.levels.WaitingRoomLevel;
 import fr.smato.gameproject.game.model.drawable.ActionButton;
 import fr.smato.gameproject.game.model.drawable.Entity;
@@ -66,7 +68,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
     private Client client;
 
     //gameManagement
-    private GameState state = GameState.waiting;
+    private GameState state = GameState.playing;
 
 
     // création de la surface de dessin
@@ -78,7 +80,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         reference = DataBaseManager.rootDatabaseRef.child("Games").child(gameId);
 
 
-        this.mapManager = new MapManager(this, new WaitingRoomLevel());
+        this.mapManager = new MapManager(this, new FirstGameLevel());
         getHolder().addCallback(this);
         gameLoopThread = new GameLoopThread(this);
 
@@ -99,12 +101,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
                 }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
                     @Override
                     public void onEvent() {
-                        ((GameActivity) getCurrentContext()).onPlay();
+                        mapManager.changeLevel(new FirstGameLevel());
+                        mapManager.resize(screenWidth, screenHeight);
                     }
                 }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
                     @Override
                     public void onEvent() {
-
+                        mapManager.changeLevel(new SecondGameLevel());
+                        mapManager.resize(screenWidth, screenHeight);
                     }
                 }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
                     @Override
@@ -318,12 +322,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
 
 
-    private double resizerW(double i) {
+    public double resizerW(double i) {
 
         return i/1000*screenWidth;
 
     }
-    private double resizerH(double i) {
+
+    public double resizerH(double i) {
 
         return i/1000*screenHeight;
 
@@ -386,44 +391,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
     private void updateGame() {
 
-        if (state == GameState.waiting) {
 
-
-
-        } else if (state == GameState.starting) {
-
-
-
-        } else if (state == GameState.playing) {
-
-
-
-        }
 
     }
 
     private void drawGame(Canvas canvas) {
 
-        if (state == GameState.waiting) {
 
 
-            Paint paint = new Paint();
-            int color = ContextCompat.getColor(getContext(), R.color.colorPrimaryLight);
-            paint.setColor(color);
-            paint.setTextSize((float) resizerW(40));
-            canvas.drawText("En attente - "+ (players.size() + 1) + " joueur(s)", (int) resizerW(350), (int) resizerH(880), paint);
+    }
 
-
-        } else if (state == GameState.starting) {
-
-
-
-        } else if (state == GameState.playing) {
-
-
-
-        }
-
+    public PlayerEntity getPlayer() {
+        return player;
     }
 
     public static Context getCurrentContext() {

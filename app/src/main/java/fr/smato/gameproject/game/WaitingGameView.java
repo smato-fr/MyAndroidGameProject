@@ -110,7 +110,7 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
             }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
                 @Override
                 public void onEvent() {
-                    ((GameActivity) getCurrentContext()).onPlay();
+
                 }
             }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
                 @Override
@@ -200,7 +200,7 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
        client.init();
 
         //GUI on FrameLayout
-        waitingText = new Button(getContext());
+        waitingText = new TextView(getContext());
         waitingText.setText(players.size() + " joueur(s) connecté(s)");
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -356,7 +356,10 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
     }
 
 
-
+    @Override
+    public PlayerEntity getPlayer() {
+        return player;
+    }
 
     private double resizerW(double i) {
 
