@@ -8,6 +8,10 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -63,9 +67,8 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
 
     private Map<String, Player> players = new HashMap<>();
 
-
-
     private Hoster hoster;
+    private Button playButton;
     private Client client;
 
     //gameManagement
@@ -158,12 +161,31 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
             }
         });
 
+
        //client/server
 
         //load hoster if is
         if (host) {
             hoster = new Hoster(this);
             hoster.init();
+            playButton = new Button(getContext());
+            playButton.setText("Jouer");
+            playButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    playButton.setOnClickListener(null);
+                    playButton.setClickable(false);
+                    setState(GameState.starting);
+                    playButton.setText("Démarrage...");
+                    hoster.start();
+                }
+            });
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+            getGameActivity().getGameWidgets().addView(playButton, params);
+
         }
 
         //load client
@@ -204,8 +226,6 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
             e.update();
         }
 
-        //update game
-        updateGame();
     }
 
 
@@ -361,30 +381,23 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
 
     public void onStart() {
         state = GameState.starting;
+
     }
 
     public void onPlay() {
         state = GameState.playing;
     }
 
-
-    private void updateGame() {
-
-        if (state == GameState.waiting) {
-
-
-
-        } else if (state == GameState.starting) {
-
-
-
-        } else if (state == GameState.playing) {
-
-
-
-        }
-
+    @Override
+    public GameState getState() {
+        return state;
     }
+
+    @Override
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
 
     private void drawGame(Canvas canvas) {
 
@@ -400,7 +413,11 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
 
         } else if (state == GameState.starting) {
 
-
+            Paint paint = new Paint();
+            int color = ContextCompat.getColor(getContext(), R.color.colorPrimaryLight);
+            paint.setColor(color);
+            paint.setTextSize((float) resizerW(40));
+            canvas.drawText("Démarrage... - "+ (players.size() + 1) + " joueur(s)", (int) resizerW(350), (int) resizerH(880), paint);
 
         } else if (state == GameState.playing) {
 
@@ -439,6 +456,11 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
 
     public GameMessagePopup getChatPopup() {
         return chatPopup;
+    }
+
+    @Override
+    public GameActivity getGameActivity() {
+        return (GameActivity) getCurrentContext();
     }
 
 } // class GameView

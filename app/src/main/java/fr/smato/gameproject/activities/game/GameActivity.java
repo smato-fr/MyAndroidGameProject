@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import fr.smato.gameproject.DataBaseManager;
@@ -19,6 +20,7 @@ public class GameActivity extends AppCompatActivity {
 
     private FrameLayout game;
     private SurfaceView gameView;
+    private RelativeLayout gameWidgets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +37,8 @@ public class GameActivity extends AppCompatActivity {
 
         //set content of activity
         game = new FrameLayout(this);
+        gameWidgets = new RelativeLayout(this);
         gameView=new WaitingGameView(this, getIntent().getStringExtra("id"), getIntent().getBooleanExtra("host", false));
-        LinearLayout gameWidgets = new LinearLayout(this);
-        Button endGameButton = new Button(this);
-        TextView myText = new TextView(this);
-
-        endGameButton.setWidth(300);
-        endGameButton.setText("Start Game");
-        myText.setText("rIZ..i");
-
-        gameWidgets.addView(myText);
-        gameWidgets.addView(endGameButton);
 
         game.addView(gameView);
         game.addView(gameWidgets);
@@ -73,5 +66,14 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         DataBaseManager.setStatus("offline");
+    }
+
+
+    public FrameLayout getMainLayout() {
+        return game;
+    }
+
+    public RelativeLayout getGameWidgets() {
+        return gameWidgets;
     }
 }

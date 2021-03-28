@@ -61,7 +61,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
     private Map<String, Player> players = new HashMap<>();
 
-    //SALUT C4EST MOI !!!
 
     private Hoster hoster;
     private Client client;
@@ -354,17 +353,32 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
 
     //TODO GAME MANAGER
+    @Override
     public void onWait() {
-        state = GameState.waiting;
+
     }
 
+    @Override
     public void onStart() {
-        state = GameState.starting;
+
     }
 
+    @Override
     public void onPlay() {
-        state = GameState.playing;
+
     }
+
+    @Override
+    public GameState getState() {
+        return state;
+    }
+
+    @Override
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
+
 
     @Override
     public MapManager getMapManager() {
@@ -434,8 +448,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         return reference;
     }
 
+
+
     public GameMessagePopup getChatPopup() {
         return chatPopup;
+    }
+
+    @Override
+    public GameActivity getGameActivity() {
+        return (GameActivity) getCurrentContext();
     }
 
 }

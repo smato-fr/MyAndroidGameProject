@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "215024367363",
+    "firebase_url": "https://liegameproject-default-rtdb.firebaseio.com",
+    "project_id": "liegameproject",
+    "storage_bucket": "liegameproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215024367363:android:8ecd76c72234d29387db36",
+        "android_client_info": {
+          "package_name": "fr.smato.gameproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215024367363-604f68h4o7uegvulbndbe6m4r47r91v8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.smato.gameproject",
+            "certificate_hash": "986de4262bb4e8a19e0e472a155a6863aaf40a67"
+          }
+        },
+        {
+          "client_id": "215024367363-gklve81uo9n82bh2emkfiiuqlasn07rb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMhGB0P8ndwDYzMg4xWGWVWrhqQtPv5as"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "215024367363-gklve81uo9n82bh2emkfiiuqlasn07rb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
