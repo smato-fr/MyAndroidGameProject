@@ -61,7 +61,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
     private Map<String, Player> players = new HashMap<>();
 
-
+    //SALUT C4EST MOI !!!
 
     private Hoster hoster;
     private Client client;
