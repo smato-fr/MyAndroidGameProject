@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.smato.gameproject.R;
-import fr.smato.gameproject.game.GameView;
+import fr.smato.gameproject.game.WaitingGameView;
 import fr.smato.gameproject.game.model.objects.Location;
+import fr.smato.gameproject.game.model.utils.GameViewI;
 import fr.smato.gameproject.utils.callback.Event;
 
 public class ActionButton extends Entity {
@@ -23,9 +24,9 @@ public class ActionButton extends Entity {
 
     private boolean extanded = false;
 
-    public ActionButton(Context context, GameView game) {
+    public ActionButton(Context context, GameViewI game) {
         super(context, game);
-        mainButtonImage = GameView.loadImage(R.drawable.ic_test);
+        mainButtonImage = WaitingGameView.loadImage(R.drawable.ic_test);
         actionButtons = new ArrayList<>();
     }
 
@@ -38,10 +39,10 @@ public class ActionButton extends Entity {
 
         super.circleRadious = mainButtonSize/2;
 
-        mainButtonImage = GameView.resizeImage(mainButtonImage, mainButtonSize, mainButtonSize);
+        mainButtonImage = WaitingGameView.resizeImage(mainButtonImage, mainButtonSize, mainButtonSize);
         for (int i = 0; i < actionButtons.size(); i++) {
             ButtonAction ac = actionButtons.get(i);
-            ac.image = GameView.resizeImage(ac.image, actionButtonSize, actionButtonSize);
+            ac.image = WaitingGameView.resizeImage(ac.image, actionButtonSize, actionButtonSize);
             ac.pos = getActionButtonLocation(Math.toRadians(120/actionButtons.size()*i));
         }
 
@@ -117,7 +118,7 @@ public class ActionButton extends Entity {
 
 
         private ButtonAction(int imageRes) {
-            image = GameView.loadImage(imageRes);
+            image = WaitingGameView.loadImage(imageRes);
         }
 
 

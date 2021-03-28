@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +40,8 @@ import fr.smato.gameproject.game.model.utils.GameViewI;
 import fr.smato.gameproject.popup.GameMessagePopup;
 import fr.smato.gameproject.utils.callback.Event;
 
-public class GameView extends SurfaceView implements SurfaceHolder.Callback, GameViewI {
+// SurfaceView
+public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callback, GameViewI {
 
     private final PlayerEntity player;
     private final JoyStick joyStick;
@@ -53,7 +55,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
     private MapManager mapManager;
     private boolean inited = false;
 
-    public static GameView INSTANCE;
+    public static WaitingGameView INSTANCE;
 
     private DatabaseReference reference;
     private final String gameId;
@@ -71,7 +73,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
 
     // création de la surface de dessin
-    public GameView(final GameActivity context, String gameId, boolean host) {
+    public WaitingGameView(final GameActivity context, String gameId, boolean host) {
         super(context);
         INSTANCE = this;
 
@@ -85,34 +87,34 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
 
         //init popups
-        this.chatPopup = new GameMessagePopup(getContext(), GameView.this);
+        this.chatPopup = new GameMessagePopup(getContext(), WaitingGameView.this);
 
         //init drawables
         joyStick = new JoyStick(getContext(), this);
         player = new PlayerEntity(getContext(), this);
         actionButton = new ActionButton(getContext(), this);
         actionButton.setActionButtons(Arrays.asList(
-                actionButton.newButtonAction(R.drawable.send, new Event() {
-                    @Override
-                    public void onEvent() {
-                        chatPopup.show();
-                    }
-                }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
-                    @Override
-                    public void onEvent() {
-                        ((GameActivity) getCurrentContext()).onPlay();
-                    }
-                }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
-                    @Override
-                    public void onEvent() {
+            actionButton.newButtonAction(R.drawable.send, new Event() {
+                @Override
+                public void onEvent() {
+                    chatPopup.show();
+                }
+            }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
+                @Override
+                public void onEvent() {
+                    ((GameActivity) getCurrentContext()).onPlay();
+                }
+            }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
+                @Override
+                public void onEvent() {
 
-                    }
-                }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
-                    @Override
-                    public void onEvent() {
+                }
+            }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
+                @Override
+                public void onEvent() {
 
-                    }
-                })
+                }
+            })
 
         ));
         joyStick.setOnMove(new Event() {
@@ -135,16 +137,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
 
 
-        reference.child("players").child("inGame").addValueEventListener(new ValueEventListener() {
+       reference.child("players").child("inGame").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                players.clear();
+               players.clear();
 
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     if (ds.getKey().equals(DataBaseManager.currentUser.getId())) continue;
                     String userId = ds.getKey();
 
-                    Player p = new Player(GameView.this, userId);
+                    Player p = new Player(WaitingGameView.this, userId);
                     p.resize((int) resizerH(40));
                     players.put(userId, p);
                 }
@@ -156,7 +158,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
             }
         });
 
-        //client/server
+       //client/server
 
         //load hoster if is
         if (host) {
@@ -165,8 +167,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         }
 
         //load client
-        client = new Client(this);
-        client.init();
+       client = new Client(this);
+       client.init();
 
         setFocusable(true);
     }
@@ -241,7 +243,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         int color = ContextCompat.getColor(getContext(), R.color.white);
         paint.setColor(color);
         paint.setTextSize(50);
-        canvas.drawText("-FPS: "+ fps, 100, 200, paint);
+        canvas.drawText("FPS: "+ fps, 100, 200, paint);
     }
 
     private void drawUPS(Canvas canvas) {
@@ -250,7 +252,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         int color = ContextCompat.getColor(getContext(), R.color.white);
         paint.setColor(color);
         paint.setTextSize(50);
-        canvas.drawText("-UPS: "+ ups, 100, 100, paint);
+        canvas.drawText("UPS: "+ ups, 100, 100, paint);
     }
 
 
@@ -332,7 +334,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
     }
 
-    @Override
     public boolean isInited() {
         return inited;
     }
@@ -364,11 +365,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
     public void onPlay() {
         state = GameState.playing;
-    }
-
-    @Override
-    public MapManager getMapManager() {
-        return mapManager;
     }
 
 
@@ -414,6 +410,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
     }
 
+
+
+
     public static Context getCurrentContext() {
         return WaitingGameView.INSTANCE.getContext();
     }
@@ -424,6 +423,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
     public int getScreenHeight() {
         return screenHeight;
+    }
+
+    public MapManager getMapManager() {
+        return mapManager;
     }
 
     public String getGameId() {
@@ -438,4 +441,4 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         return chatPopup;
     }
 
-}
+} // class GameView

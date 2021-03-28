@@ -3,7 +3,7 @@ package fr.smato.gameproject.game.map;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-import fr.smato.gameproject.game.GameView;
+import fr.smato.gameproject.game.WaitingGameView;
 
 public abstract class Level {
 
@@ -31,7 +31,7 @@ public abstract class Level {
         tileHeigth = (float) (screenHeight/mapHeight);
 
         for (int i = 0; i < textures.length; i++) {
-            textures[i] = GameView.resizeImage(textures[i], (int) tileWidth, (int) tileHeigth);
+            textures[i] = WaitingGameView.resizeImage(textures[i], (int) tileWidth, (int) tileHeigth);
         }
 
     }

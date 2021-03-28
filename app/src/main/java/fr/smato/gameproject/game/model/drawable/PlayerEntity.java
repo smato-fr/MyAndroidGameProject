@@ -6,8 +6,9 @@ import android.graphics.Canvas;
 
 
 import fr.smato.gameproject.game.GameLoopThread;
-import fr.smato.gameproject.game.GameView;
+import fr.smato.gameproject.game.WaitingGameView;
 import fr.smato.gameproject.game.model.objects.Location;
+import fr.smato.gameproject.game.model.utils.GameViewI;
 
 public class PlayerEntity extends Entity {
 
@@ -18,7 +19,7 @@ public class PlayerEntity extends Entity {
 
 
 
-    public PlayerEntity(Context context, GameView gameView) {
+    public PlayerEntity(Context context, GameViewI gameView) {
         super(context, gameView);
     }
 

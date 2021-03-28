@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fr.smato.gameproject.DataBaseManager;
+import fr.smato.gameproject.game.model.utils.GameViewI;
 
 public class Hoster {
 
-    private GameView game;
+    private GameViewI game;
 
-    public Hoster(GameView gameView) {
+    public Hoster(GameViewI gameView) {
         this.game = gameView;
     }
 

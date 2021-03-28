@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 
 import androidx.annotation.NonNull;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,11 +13,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import fr.smato.gameproject.DataBaseManager;
-import fr.smato.gameproject.R;
-import fr.smato.gameproject.game.GameView;
+import fr.smato.gameproject.game.WaitingGameView;
+import fr.smato.gameproject.game.model.utils.GameViewI;
 import fr.smato.gameproject.model.Chat;
-import fr.smato.gameproject.model.User;
 
 public class MapManager {
 
@@ -27,10 +24,10 @@ public class MapManager {
     private List<Chat> chats = new ArrayList<>();
 
 
-    private final GameView gameView;
+    private final GameViewI gameView;
     private DatabaseReference reference;
 
-    public MapManager(GameView gameView, Level level) {
+    public MapManager(GameViewI gameView, Level level) {
         this.gameView = gameView;
         changeLevel(level);
     }

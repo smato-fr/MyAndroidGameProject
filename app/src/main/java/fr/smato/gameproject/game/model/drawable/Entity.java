@@ -7,13 +7,14 @@ import android.graphics.Paint;
 import androidx.core.content.ContextCompat;
 
 import fr.smato.gameproject.R;
-import fr.smato.gameproject.game.GameView;
+import fr.smato.gameproject.game.WaitingGameView;
 import fr.smato.gameproject.game.model.objects.Location;
+import fr.smato.gameproject.game.model.utils.GameViewI;
 
 public class Entity {
 
     protected Context context;
-    protected GameView game;
+    protected GameViewI game;
 
     protected Location location;
     protected Paint paint;
@@ -23,7 +24,7 @@ public class Entity {
     protected double vx, vy;
 
 
-    public Entity(Context context, GameView game) {
+    public Entity(Context context, GameViewI game) {
         this.context = context;
         this.game = game;
         paint = new Paint();

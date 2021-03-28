@@ -1,6 +1,9 @@
 package fr.smato.gameproject.game;
 
 import android.graphics.Canvas;
+import android.view.SurfaceView;
+
+import fr.smato.gameproject.game.model.utils.GameViewI;
 
 public class GameLoopThread extends Thread
 {
@@ -10,13 +13,13 @@ public class GameLoopThread extends Thread
     public static final double MAX_UPS = 30.0;
     private static final double UPS_PERIOD = 1E+3/MAX_UPS;
 
-    private final GameView game; // l'objet SurfaceView que nous verrons plus bas
+    private final GameViewI game; // l'objet SurfaceView que nous verrons plus bas
     private boolean running = false; // état du thread, en cours ou non
     private double averageUPS;
     private double averageFPS;
 
     // constructeur de l'objet, on lui associe l'objet view passé en paramètre
-    public GameLoopThread(GameView view) {
+    public GameLoopThread(GameViewI view) {
         this.game = view;
     }
 
@@ -52,8 +55,8 @@ public class GameLoopThread extends Thread
 
             //Try to update and render game
             try {
-                canvas = game.getHolder().lockCanvas();
-                synchronized (game.getHolder()) {
+                canvas = game.getSurfaceHolder().lockCanvas();
+                synchronized (game.getSurfaceHolder()) {
                     game.update();
                     updateCount++;
 
@@ -65,7 +68,7 @@ public class GameLoopThread extends Thread
             } finally {
                 if (canvas != null) {
                     try {
-                        game.getHolder().unlockCanvasAndPost(canvas);
+                        game.getSurfaceHolder().unlockCanvasAndPost(canvas);
                         frameCount++;
                     } catch (Exception e) {
                         e.printStackTrace();

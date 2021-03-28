@@ -7,17 +7,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import fr.smato.gameproject.DataBaseManager;
 import fr.smato.gameproject.game.model.enums.GameState;
+import fr.smato.gameproject.game.model.utils.GameViewI;
 
 public class Client {
 
-    private GameView game;
+    private GameViewI game;
 
     private DatabaseReference ref;
 
 
-    public Client(GameView gameView) {
+    public Client(GameViewI gameView) {
         this.game = gameView;
     }
 

@@ -1,18 +1,15 @@
 package fr.smato.gameproject.game.model.objects;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
-
 import fr.smato.gameproject.DataBaseManager;
-import fr.smato.gameproject.game.GameView;
+import fr.smato.gameproject.game.WaitingGameView;
 import fr.smato.gameproject.game.model.drawable.Entity;
+import fr.smato.gameproject.game.model.utils.GameViewI;
 import fr.smato.gameproject.model.LocationModel;
 import fr.smato.gameproject.model.User;
 
@@ -25,14 +22,14 @@ public class Player {
     private User user;
 
     private final String id;
-    private final GameView game;
+    private final GameViewI game;
 
     private Entity entity;
 
     private Role role;
 
 
-    public Player(final GameView game, String id) {
+    public Player(final GameViewI game, String id) {
         this.game = game;
         this.id = id;
 
@@ -76,7 +73,7 @@ public class Player {
         return location;
     }
 
-    public GameView getGame() {
+    public GameViewI getGame() {
         return game;
     }
 

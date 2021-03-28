@@ -5,9 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import fr.smato.gameproject.game.GameView;
+import fr.smato.gameproject.game.WaitingGameView;
 import fr.smato.gameproject.game.model.utils.Dragable;
 import fr.smato.gameproject.game.model.objects.Location;
+import fr.smato.gameproject.game.model.utils.GameViewI;
 import fr.smato.gameproject.utils.callback.Event;
 
 public class JoyStick extends Entity implements Dragable {
@@ -22,7 +23,7 @@ public class JoyStick extends Entity implements Dragable {
 
     private Event onMove;
 
-    public JoyStick(Context context, GameView gameView) {
+    public JoyStick(Context context, GameViewI gameView) {
         super(context, gameView);
 
         innerCirclePaint = new Paint();
