@@ -26,10 +26,10 @@ import java.util.Map;
 import fr.smato.gameproject.DataBaseManager;
 import fr.smato.gameproject.R;
 import fr.smato.gameproject.activities.game.GameActivity;
+import fr.smato.gameproject.game.map.GameLevel;
 import fr.smato.gameproject.game.map.MapManager;
 import fr.smato.gameproject.game.map.levels.FirstGameLevel;
 import fr.smato.gameproject.game.map.levels.SecondGameLevel;
-import fr.smato.gameproject.game.map.levels.WaitingRoomLevel;
 import fr.smato.gameproject.game.model.drawable.ActionButton;
 import fr.smato.gameproject.game.model.drawable.Entity;
 import fr.smato.gameproject.game.model.drawable.JoyStick;
@@ -43,7 +43,7 @@ import fr.smato.gameproject.utils.callback.Event;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, GameViewI {
 
-    private final PlayerEntity player;
+    private final Player player;
     private final JoyStick joyStick;
     private final ActionButton actionButton;
     private final List<Entity> entities = new ArrayList<>();
@@ -88,9 +88,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         //init popups
         this.chatPopup = new GameMessagePopup(getContext(), GameView.this);
 
+
+        player = new Player(this, gameId, getMapManager().getLevel().getRoomName(), true);
+
         //init drawables
         joyStick = new JoyStick(getContext(), this);
-        player = new PlayerEntity(getContext(), this);
         actionButton = new ActionButton(getContext(), this);
         actionButton.setActionButtons(Arrays.asList(
                 actionButton.newButtonAction(R.drawable.send, new Event() {
@@ -124,15 +126,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
                 double vx = joyStick.getActuatorX()*PlayerEntity.SPEED_MAX;
                 double vy = joyStick.getActuatorY()*PlayerEntity.SPEED_MAX;
 
-                player.setVx(vx);
-                player.setVy(vy);
-
-
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("x", player.getX()/screenWidth);
-                map.put("y", player.getY()/screenHeight);
-                reference.child("players").child("list").child(DataBaseManager.currentUser.getId()).child("location").setValue(map);
-
+                player.getEntity().setVx(vx);
+                player.getEntity().setVy(vy);
             }
         });
 
@@ -147,7 +142,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
                     if (ds.getKey().equals(DataBaseManager.currentUser.getId())) continue;
                     String userId = ds.getKey();
 
-                    Player p = new Player(GameView.this, userId);
+                    Player p = new Player(GameView.this, userId, getMapManager().getLevel().getRoomName(), false);
                     p.resize((int) resizerH(40));
                     players.put(userId, p);
                 }
@@ -182,7 +177,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
         mapManager.resize(screenWidth, screenHeight);
         joyStick.resize(new Location(resizerW(120), resizerH(800)), (int) resizerW(80), (int) resizerW(40));
-        player.resize(new Location(screenWidth/2, screenHeight/2), (int) resizerH(50));
+        player.resize((int) resizerH(50));
         actionButton.resize(new Location(resizerW(800), resizerH(670)), (int) resizerW(160), (int) resizerW(70), (int) resizerH(260));
         for (Player p : players.values()) {
             p.resize((int) resizerH(40));
@@ -195,6 +190,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
     //update components and game
     public void update() {
+
+        //update terrain
+        getMapManager().getLevel().update();
 
         //update components
         player.update();
@@ -219,7 +217,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         //entity
         player.draw(canvas);
         for (Player p : players.values()) {
-            p.getEntity().draw(canvas);
+             if (getPlayer().getRoom().equals(p.getRoom())) p.getEntity().draw(canvas);
         }
         for (Entity e : entities) {
             e.draw(canvas);
@@ -401,8 +399,23 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
     }
 
-    public PlayerEntity getPlayer() {
+
+    public Player getPlayer() {
         return player;
+    }
+
+    @Override
+    public PlayerEntity getPlayerEntity() {
+        return (PlayerEntity) player.getEntity();
+    }
+
+    @Override
+    public void movePlayer() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("x", player.getEntity().getX()/screenWidth);
+        map.put("y", player.getEntity().getY()/screenHeight);
+        map.put("room", player.getRoom());
+        reference.child("players").child("list").child(DataBaseManager.currentUser.getId()).child("location").updateChildren(map);
     }
 
     public static Context getCurrentContext() {
@@ -436,4 +449,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         return (GameActivity) getCurrentContext();
     }
 
+    public void changeLevel(GameLevel level, float x, float y) {
+        player.getEntity().setLocation(x*screenWidth, y*screenHeight);
+        player.setRoom(level.getRoomName());
+
+        getMapManager().changeLevel(level);
+        getMapManager().resize(screenWidth, screenHeight);
+        movePlayer();
+    }
 }

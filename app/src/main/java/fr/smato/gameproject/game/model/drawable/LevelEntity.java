@@ -2,6 +2,7 @@ package fr.smato.gameproject.game.model.drawable;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import fr.smato.gameproject.game.model.utils.GameViewI;
 import fr.smato.gameproject.utils.callback.Event;
@@ -19,8 +20,9 @@ public class LevelEntity extends Entity{
 
     @Override
     public void update() {
-
-        if (isTouched(game.getPlayer().getX(), game.getPlayer().getY())) {
+        Log.d("TAG", "update: ");
+        if (isTouched(game.getPlayerEntity().getX(), game.getPlayerEntity().getY())) {
+            Log.d("TAG", "update: touched !");
             onTouch.onEvent();
         }
 

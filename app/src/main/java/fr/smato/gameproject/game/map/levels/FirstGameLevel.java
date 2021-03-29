@@ -37,9 +37,10 @@ public class FirstGameLevel extends GameLevel {
         switchLevelEntity = new LevelEntity(GameView.INSTANCE.getContext(), GameView.INSTANCE, new Event() {
             @Override
             public void onEvent() {
-                GameView.INSTANCE.getMapManager().changeLevel(new SecondGameLevel());
+                GameView.INSTANCE.changeLevel(new SecondGameLevel(), 0.1f, 0.5f);
             }
         });
+        switchLevelEntity.setVisible(false);
 
         super.entities.add(switchLevelEntity);
     }
@@ -48,7 +49,7 @@ public class FirstGameLevel extends GameLevel {
     public void resize(int screenWidth, int screenHeight) {
         super.resize(screenWidth, screenHeight);
 
-        switchLevelEntity.resize(new Location(screenWidth, screenHeight/2), 10);
+        switchLevelEntity.resize(new Location(screenWidth*1.1f, screenHeight/2), (int) tileHeigth*2);
 
     }
 
@@ -57,4 +58,5 @@ public class FirstGameLevel extends GameLevel {
         super.update();
 
     }
+
 }

@@ -92,7 +92,10 @@ public class Entity {
         return location.y;
     }
 
-
+    public void setLocation(double x, double y) {
+        location.x = x;
+        location.y = y;
+    }
 
     public void setVx(double vx) {
         this.vx = vx;

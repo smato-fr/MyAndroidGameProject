@@ -1,6 +1,7 @@
 package fr.smato.gameproject.game.map;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,5 +25,16 @@ public abstract class GameLevel extends Level {
             entity.update();
         }
 
+    }
+
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+
+
+        for (LevelEntity entity : entities) {
+            entity.draw(canvas);
+        }
     }
 }

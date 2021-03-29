@@ -133,13 +133,6 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
 
                 player.setVx(vx);
                 player.setVy(vy);
-
-
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("x", player.getX()/screenWidth);
-                map.put("y", player.getY()/screenHeight);
-                reference.child("players").child("list").child(DataBaseManager.currentUser.getId()).child("location").setValue(map);
-
             }
         });
 
@@ -154,7 +147,7 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
                     if (ds.getKey().equals(DataBaseManager.currentUser.getId())) continue;
                     String userId = ds.getKey();
 
-                    Player p = new Player(WaitingGameView.this, userId);
+                    Player p = new Player(WaitingGameView.this, userId, getMapManager().getLevel().getRoomName(), false);
                     p.resize((int) resizerH(40));
                     players.put(userId, p);
                 }
@@ -357,8 +350,17 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
 
 
     @Override
-    public PlayerEntity getPlayer() {
+    public PlayerEntity getPlayerEntity() {
         return player;
+    }
+
+    @Override
+    public void movePlayer() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("x", player.getX()/screenWidth);
+        map.put("y", player.getY()/screenHeight);
+        map.put("room", getMapManager().getLevel().getRoomName());
+        reference.child("players").child("list").child(DataBaseManager.currentUser.getId()).child("location").updateChildren(map);
     }
 
     private double resizerW(double i) {

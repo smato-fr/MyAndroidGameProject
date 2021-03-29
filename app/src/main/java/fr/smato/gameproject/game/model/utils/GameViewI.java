@@ -41,5 +41,7 @@ public interface GameViewI {
     Context getContext();
     GameActivity getGameActivity();
 
-    PlayerEntity getPlayer();
+    PlayerEntity getPlayerEntity();
+
+    void movePlayer();
 }
