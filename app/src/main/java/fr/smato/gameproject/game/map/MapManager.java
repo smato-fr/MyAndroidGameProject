@@ -1,6 +1,7 @@
 package fr.smato.gameproject.game.map;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -22,13 +23,66 @@ public class MapManager {
     private Level level;
 
     private List<Chat> chats = new ArrayList<>();
+    private List<Chat> visibleChats = new ArrayList<>();
+    private String lastRoomName;
 
 
     private final GameViewI gameView;
     private DatabaseReference reference;
 
-    public MapManager(GameViewI gameView, Level level) {
+    private final ValueEventListener eventListener;
+
+
+    public MapManager(GameViewI gameView, final Level level) {
         this.gameView = gameView;
+        this.eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<String> keys = new ArrayList<>();
+
+                boolean changedRoom = !lastRoomName.equals(MapManager.this.level.getRoomName());
+                if (changedRoom) {
+                    chats.clear();
+                    visibleChats.clear();
+                }
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    String id = ds.getKey();
+                    keys.add(id);
+
+                    Chat chat = ds.getValue(Chat.class);
+                    chat.id = id;
+
+                    if (chats.size() >= 10) {
+                        reference.child(keys.get(0)).removeValue();
+                        keys.remove(0);
+                    }
+
+
+                    boolean in = false;
+                    for (Chat c : chats) {
+                        if (c.id == chat.id) in = true;
+                    }
+                    if (!in) {
+                        chats.add(chat);
+                        if (!changedRoom) {
+                            visibleChats.add(chat);
+                        }
+                    }
+
+                }
+
+                MapManager.this.gameView.getChatPopup().updateRecycleView();
+
+                lastRoomName = MapManager.this.level.getRoomName();
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        this.lastRoomName = "void";
         changeLevel(level);
     }
 
@@ -42,39 +96,18 @@ public class MapManager {
 
 
     public void changeLevel(Level level) {
+        if (reference != null) reference.removeEventListener(eventListener);
+        if (this.level != null) lastRoomName = this.level.getRoomName();
+
         this.level = level;
         this.level.init();
+
+        chats.clear();
+        visibleChats.clear();
+        gameView.getChatPopup().updateRecycleView();
+
         this.reference = gameView.getReference().child("Rooms").child(level.getRoomName()).child("Chat");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<String> keys = new ArrayList<>();
-                chats.clear();
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    keys.add(ds.getKey());
-
-                    Chat chat = ds.getValue(Chat.class);
-
-                    if (chats.size() >= 10) {
-                        reference.child(keys.get(0)).removeValue();
-                        keys.remove(0);
-                    }
-
-                    chats.add(chat);
-
-                }
-
-                if (gameView.getChatPopup().isShowing()) {
-                    gameView.getChatPopup().updateRecycleView();
-                }
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        reference.addValueEventListener(eventListener);
     }
 
 
@@ -95,6 +128,6 @@ public class MapManager {
 
 
     public List<Chat> getChats() {
-        return chats;
+        return visibleChats;
     }
 }

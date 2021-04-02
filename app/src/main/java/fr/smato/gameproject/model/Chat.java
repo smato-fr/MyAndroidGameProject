@@ -6,11 +6,13 @@ public class Chat {
     private String receiver;
     private String message;
     private String date;
+    public String id;
 
-    public Chat(String sender, String receiver, String message, String date) {
+    public Chat(String sender, String receiver, String message, String date, int id) {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
+        this.date = date;
     }
 
     public Chat() {
@@ -33,4 +35,5 @@ public class Chat {
     public String getDate() {
         return date;
     }
+
 }

@@ -26,6 +26,7 @@ import fr.smato.gameproject.R;
 import fr.smato.gameproject.adapter.ItemGameMessageAdapter;
 import fr.smato.gameproject.adapter.ItemMessageAdapter;
 import fr.smato.gameproject.game.WaitingGameView;
+import fr.smato.gameproject.game.map.GameLevel;
 import fr.smato.gameproject.game.model.utils.GameViewI;
 import fr.smato.gameproject.model.Chat;
 
@@ -33,13 +34,11 @@ public class GameMessagePopup extends Dialog {
 
     private final GameViewI gameView;
 
-    private ImageView profileImage;
-    private TextView username;
+    private String name;
+    private TextView roomName;
 
     private ImageButton sendBtn;
     private EditText sendText;
-
-    private Intent intent;
 
     private ItemMessageAdapter adapter;
     private List<Chat> chats;
@@ -50,11 +49,11 @@ public class GameMessagePopup extends Dialog {
     private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'à' HH:mm");
 
 
-    public GameMessagePopup(@NonNull Context context, GameViewI gameView) {
+    public GameMessagePopup(@NonNull Context context, GameViewI gameView, String name) {
         super(context);
         this.gameView = gameView;
+        this.name = name;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
     }
 
 
@@ -63,13 +62,13 @@ public class GameMessagePopup extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_game_chat);
 
-
-        profileImage = findViewById(R.id.profile_image);
-        username = findViewById(R.id.username);
+        roomName = findViewById(R.id.room_name);
         sendBtn = findViewById(R.id.btn_send);
         sendText = findViewById(R.id.text_send);
         recyclerView = findViewById(R.id.recycler_view);
 
+
+        roomName.setText(name);
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +79,7 @@ public class GameMessagePopup extends Dialog {
                         Toast.makeText(getContext(), "150 caractères maximun !", Toast.LENGTH_SHORT).show();
                     } else {
 
-                        gameView.getMapManager().sendMessage(DataBaseManager.currentUser.getId(), msg);
+                        gameView.sendMessage(DataBaseManager.currentUser.getId(), msg);
                     }
                 } else {
                     Toast.makeText(getContext(), "Message vide !", Toast.LENGTH_SHORT).show();
@@ -102,9 +101,17 @@ public class GameMessagePopup extends Dialog {
     }
 
     public void updateRecycleView() {
-        adapter = new ItemGameMessageAdapter(getContext(), chats);
-        recyclerView.setAdapter(adapter);
+        if (recyclerView != null) {
+            adapter = new ItemGameMessageAdapter(getContext(), chats);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
 
+    public void changeLevel(String level) {
+        if (isShowing()) hide();
+
+        this.name = level;
+        if (roomName != null) roomName.setText(name);
+    }
 }

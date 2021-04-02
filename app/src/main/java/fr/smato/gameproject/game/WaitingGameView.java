@@ -85,17 +85,19 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
         super(context);
         INSTANCE = this;
 
+        getHolder().addCallback(this);
+        gameLoopThread = new GameLoopThread(this);
+
         this.gameId = gameId;
         reference = DataBaseManager.rootDatabaseRef.child("Games").child(gameId);
 
 
-        this.mapManager = new MapManager(this, new WaitingRoomLevel());
-        getHolder().addCallback(this);
-        gameLoopThread = new GameLoopThread(this);
-
-
         //init popups
-        this.chatPopup = new GameMessagePopup(getContext(), WaitingGameView.this);
+        this.chatPopup = new GameMessagePopup(getContext(), WaitingGameView.this, "Salle d'attente");
+
+        //map management
+        this.mapManager = new MapManager(this, new WaitingRoomLevel());
+
 
         //init drawables
         joyStick = new JoyStick(getContext(), this);
@@ -361,6 +363,13 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
         map.put("y", player.getY()/screenHeight);
         map.put("room", getMapManager().getLevel().getRoomName());
         reference.child("players").child("list").child(DataBaseManager.currentUser.getId()).child("location").updateChildren(map);
+    }
+
+    @Override
+    public void sendMessage(String sender, String msg) {
+
+        getMapManager().sendMessage(sender, msg);
+
     }
 
     private double resizerW(double i) {

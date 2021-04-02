@@ -44,4 +44,6 @@ public interface GameViewI {
     PlayerEntity getPlayerEntity();
 
     void movePlayer();
+
+    void sendMessage(String id, String msg);
 }

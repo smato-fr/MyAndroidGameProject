@@ -76,18 +76,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         super(context);
         INSTANCE = this;
 
-        this.gameId = gameId;
-        reference = DataBaseManager.rootDatabaseRef.child("Games").child(gameId);
-
-
-        this.mapManager = new MapManager(this, new FirstGameLevel());
         getHolder().addCallback(this);
         gameLoopThread = new GameLoopThread(this);
 
+        this.gameId = gameId;
+        reference = DataBaseManager.rootDatabaseRef.child("Games").child(gameId);
 
         //init popups
-        this.chatPopup = new GameMessagePopup(getContext(), GameView.this);
+        this.chatPopup = new GameMessagePopup(getContext(), this, "Salle 1");
 
+        this.mapManager = new MapManager(this, new FirstGameLevel());
 
         player = new Player(this, gameId, getMapManager().getLevel().getRoomName(), true);
 
@@ -103,14 +101,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
                 }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
                     @Override
                     public void onEvent() {
-                        mapManager.changeLevel(new FirstGameLevel());
-                        mapManager.resize(screenWidth, screenHeight);
+
                     }
                 }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
                     @Override
                     public void onEvent() {
-                        mapManager.changeLevel(new SecondGameLevel());
-                        mapManager.resize(screenWidth, screenHeight);
+
                     }
                 }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
                     @Override
@@ -418,6 +414,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         reference.child("players").child("list").child(DataBaseManager.currentUser.getId()).child("location").updateChildren(map);
     }
 
+    @Override
+    public void sendMessage(String sender, String msg) {
+        getMapManager().sendMessage(sender, msg);
+    }
+
     public static Context getCurrentContext() {
         return WaitingGameView.INSTANCE.getContext();
     }
@@ -452,6 +453,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
     public void changeLevel(GameLevel level, float x, float y) {
         player.getEntity().setLocation(x*screenWidth, y*screenHeight);
         player.setRoom(level.getRoomName());
+
+        chatPopup.changeLevel(level.getRoomName());
 
         getMapManager().changeLevel(level);
         getMapManager().resize(screenWidth, screenHeight);
