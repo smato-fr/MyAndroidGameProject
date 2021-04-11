@@ -14,8 +14,15 @@ public class FirstGameLevel extends GameLevel {
 
     private LevelEntity switchLevelEntity;
 
+
+
+
     public FirstGameLevel() {
-        super(20, 10, new Bitmap[]{WaitingGameView.loadImage(R.drawable.ground), WaitingGameView.loadImage(R.drawable.wall)}, "Salle 1");
+        super(20, 10, new Bitmap[]{
+                WaitingGameView.loadImage(R.drawable.ground),
+                WaitingGameView.loadImage(R.drawable.wall),
+                WaitingGameView.loadImage(R.drawable.chest_closed),
+        }, "Salle 1");
     }
 
     @Override
@@ -33,6 +40,8 @@ public class FirstGameLevel extends GameLevel {
 
         tileMap[mapHeight/2][mapWidht-1] = 0;
         tileMap[mapHeight/2-1][mapWidht-1] = 0;
+
+        tileMap[1][mapWidht/2] = 2;
 
         switchLevelEntity = new LevelEntity(GameView.INSTANCE.getContext(), GameView.INSTANCE, new Event() {
             @Override
@@ -58,5 +67,6 @@ public class FirstGameLevel extends GameLevel {
         super.update();
 
     }
+
 
 }
