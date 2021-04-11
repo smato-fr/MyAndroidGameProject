@@ -1,13 +1,11 @@
 package fr.smato.gameproject.game;
 
-import android.view.View;
 import android.widget.Button;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import fr.smato.gameproject.DataBaseManager;
-import fr.smato.gameproject.game.model.enums.GameState;
 import fr.smato.gameproject.game.model.utils.GameViewI;
 
 public class Hoster {

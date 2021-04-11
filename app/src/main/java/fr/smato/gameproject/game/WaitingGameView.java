@@ -143,7 +143,10 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
        reference.child("players").child("inGame").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-               players.clear();
+                for (Player p : players.values()) {
+                    p.destroy();
+                }
+                players.clear();
 
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     if (ds.getKey().equals(DataBaseManager.currentUser.getId())) continue;
@@ -154,7 +157,7 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
                     players.put(userId, p);
                 }
 
-                waitingText.setText(players.size() + " joueur(s) connecté(s)");
+                waitingText.setText((players.size()+1) + " joueur(s) connecté(s)");
             }
 
             @Override
@@ -201,7 +204,7 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-        params.bottomMargin = 100;
+        params.bottomMargin = 150;
         getGameActivity().getGameWidgets().addView(waitingText, params);
 
 

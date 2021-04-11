@@ -29,7 +29,6 @@ import fr.smato.gameproject.activities.game.GameActivity;
 import fr.smato.gameproject.game.map.GameLevel;
 import fr.smato.gameproject.game.map.MapManager;
 import fr.smato.gameproject.game.map.levels.FirstGameLevel;
-import fr.smato.gameproject.game.map.levels.SecondGameLevel;
 import fr.smato.gameproject.game.model.drawable.ActionButton;
 import fr.smato.gameproject.game.model.drawable.Entity;
 import fr.smato.gameproject.game.model.drawable.JoyStick;
@@ -132,16 +131,35 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         reference.child("players").child("inGame").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                players.clear();
-
+                //players.clear();
+                List<String> IDs = new ArrayList<>();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     if (ds.getKey().equals(DataBaseManager.currentUser.getId())) continue;
-                    String userId = ds.getKey();
 
-                    Player p = new Player(GameView.this, userId, getMapManager().getLevel().getRoomName(), false);
-                    p.resize((int) resizerH(40));
-                    players.put(userId, p);
+                    IDs.add(ds.getKey());
                 }
+
+                Map<String, Player> newPlayersList = new HashMap<>();
+
+                for (String userId : IDs) {
+
+                    if (players.containsKey(userId)) {
+                        newPlayersList.put(userId, players.get(userId));
+                        players.remove(userId);
+                    } else {
+                        Player p = new Player(GameView.this, userId, getMapManager().getLevel().getRoomName(), false);
+                        p.resize((int) resizerH(40));
+                        newPlayersList.put(userId, p);
+                    }
+
+                }
+
+                for (Player p : players.values()) {
+                    p.destroy();
+                }
+
+                players = newPlayersList;
+
             }
 
             @Override

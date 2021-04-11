@@ -1,7 +1,6 @@
 package fr.smato.gameproject.game;
 
 import android.graphics.Canvas;
-import android.view.SurfaceView;
 
 import fr.smato.gameproject.game.model.utils.GameViewI;
 

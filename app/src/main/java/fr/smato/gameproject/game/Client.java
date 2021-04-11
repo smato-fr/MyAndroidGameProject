@@ -20,12 +20,12 @@ public class Client {
 
     public Client(GameViewI gameView) {
         this.game = gameView;
+        ref = game.getReference();
     }
 
 
     public void init() {
 
-        ref = game.getReference();
         ref.child("infos").child("state").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -42,6 +42,7 @@ public class Client {
 
                 else if (state == GameState.playing) {
                     game.onPlay();
+                    ref.child("infos").child("state").removeEventListener(this);
                 }
             }
 

@@ -9,7 +9,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import fr.smato.gameproject.DataBaseManager;
-import fr.smato.gameproject.game.WaitingGameView;
 import fr.smato.gameproject.game.model.drawable.Entity;
 import fr.smato.gameproject.game.model.drawable.PlayerEntity;
 import fr.smato.gameproject.game.model.utils.GameViewI;
@@ -30,12 +29,16 @@ public class Player {
 
     private Entity entity;
 
+    private boolean valid;
+
     private Role role;
 
-    public Player(final GameViewI game, String id, final String room, boolean selfUser) {
+    public Player(GameViewI game, String id, String room, boolean selfUser) {
         this.game = game;
         this.id = id;
         this.room = room;
+
+        this.valid = true;
 
         if (!selfUser) {
 
@@ -45,6 +48,10 @@ public class Player {
             DataBaseManager.userDatabaseRef.child(id).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (!valid) {
+                        DataBaseManager.userDatabaseRef.child(Player.this.id).removeEventListener(this);
+                        return;
+                    }
                     Player.this.user = snapshot.getValue(User.class);
                 }
 
@@ -57,10 +64,16 @@ public class Player {
             game.getReference().child("players").child("list").child(id).child("location").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (!valid) {
+                        DataBaseManager.userDatabaseRef.child(Player.this.id).removeEventListener(this);
+                        return;
+                    }
                     LocationModel model = snapshot.getValue(LocationModel.class);
-                    location.x = model.getX() * game.getScreenWidth();
-                    location.y = model.getY() * game.getScreenHeight();
-                    Player.this.room = model.getRoom();
+                    if (model != null) {
+                        location.x = model.getX() * Player.this.game.getScreenWidth();
+                        location.y = model.getY() * Player.this.game.getScreenHeight();
+                        Player.this.room = model.getRoom();
+                    }
                 }
 
                 @Override
@@ -120,4 +133,11 @@ public class Player {
     }
 
 
+    public void destroy() {
+        this.valid = false;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
 }
