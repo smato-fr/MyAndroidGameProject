@@ -97,7 +97,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
                     public void onEvent() {
                         chatPopup.show();
                     }
-                }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
+                }),actionButton.newButtonAction(R.drawable.btn_game_interact, new Event() {
                     @Override
                     public void onEvent() {
 
@@ -192,7 +192,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         mapManager.resize(screenWidth, screenHeight);
         joyStick.resize(new Location(resizerW(120), resizerH(800)), (int) resizerW(80), (int) resizerW(40));
         player.resize((int) resizerH(50));
-        actionButton.resize(new Location(resizerW(800), resizerH(670)), (int) resizerW(160), (int) resizerW(70), (int) resizerH(260));
+        actionButton.resize(new Location(resizerW(800), resizerH(670)), (int) resizerW(150), (int) resizerW(150), (int) resizerH(260));
         for (Player p : players.values()) {
             p.resize((int) resizerH(40));
         }
