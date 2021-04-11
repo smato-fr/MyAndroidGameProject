@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import fr.smato.gameproject.game.WaitingGameView;
 import fr.smato.gameproject.game.model.utils.Dragable;
 import fr.smato.gameproject.game.model.objects.Location;
 import fr.smato.gameproject.game.model.utils.GameViewI;

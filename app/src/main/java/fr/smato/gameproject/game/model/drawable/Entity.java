@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import androidx.core.content.ContextCompat;
 
 import fr.smato.gameproject.R;
-import fr.smato.gameproject.game.WaitingGameView;
 import fr.smato.gameproject.game.model.objects.Location;
 import fr.smato.gameproject.game.model.utils.GameViewI;
 

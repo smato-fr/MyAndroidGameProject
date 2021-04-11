@@ -1,7 +1,6 @@
 package fr.smato.gameproject.game.map;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import fr.smato.gameproject.game.WaitingGameView;
 import fr.smato.gameproject.game.model.utils.GameViewI;
 import fr.smato.gameproject.model.Chat;
 

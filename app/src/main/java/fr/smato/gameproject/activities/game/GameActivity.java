@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import fr.smato.gameproject.DataBaseManager;
 import fr.smato.gameproject.game.GameView;
