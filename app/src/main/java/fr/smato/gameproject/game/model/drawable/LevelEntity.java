@@ -8,7 +8,7 @@ import fr.smato.gameproject.utils.callback.Event;
 
 public class LevelEntity extends Entity{
 
-    private final Event onTouch;
+    private Event onTouch;
 
     private boolean visible = true;
 
@@ -33,4 +33,13 @@ public class LevelEntity extends Entity{
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setOnTouch(Event onTouch) {
+        this.onTouch = onTouch;
+    }
+
 }

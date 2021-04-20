@@ -14,8 +14,8 @@ public class SecondGameLevel extends GameLevel {
 
     private LevelEntity switchLevelEntity;
 
-    public SecondGameLevel() {
-        super(20, 10, new Bitmap[]{WaitingGameView.loadImage(R.drawable.ground), WaitingGameView.loadImage(R.drawable.wall)}, "Salle 2");
+    public SecondGameLevel(GameView gameView) {
+        super(gameView, 20, 10, new Bitmap[]{WaitingGameView.loadImage(R.drawable.ground), WaitingGameView.loadImage(R.drawable.wall)}, "Salle 2");
     }
 
     @Override
@@ -38,7 +38,7 @@ public class SecondGameLevel extends GameLevel {
         switchLevelEntity = new LevelEntity(GameView.INSTANCE.getContext(), GameView.INSTANCE, new Event() {
             @Override
             public void onEvent() {
-                GameView.INSTANCE.changeLevel(new FirstGameLevel(), 0.9f, 0.5f);
+                GameView.INSTANCE.changeLevel(new FirstGameLevel((GameView) gameView), 0.9f, 0.5f);
             }
         });
         switchLevelEntity.setVisible(false);

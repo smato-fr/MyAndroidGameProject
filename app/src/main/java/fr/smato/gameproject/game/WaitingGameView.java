@@ -96,7 +96,7 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
         this.chatPopup = new GameMessagePopup(getContext(), WaitingGameView.this, "Salle d'attente");
 
         //map management
-        this.mapManager = new MapManager(this, new WaitingRoomLevel());
+        this.mapManager = new MapManager(this, new WaitingRoomLevel(this));
 
 
         //init drawables
@@ -375,12 +375,15 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
 
     }
 
-    private double resizerW(double i) {
+    @Override
+    public double resizerW(double i) {
 
         return i/1000*screenWidth;
 
     }
-    private double resizerH(double i) {
+
+    @Override
+    public double resizerH(double i) {
 
         return i/1000*screenHeight;
 

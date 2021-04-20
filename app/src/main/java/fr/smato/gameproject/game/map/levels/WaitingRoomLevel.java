@@ -9,8 +9,8 @@ import fr.smato.gameproject.game.map.Level;
 public class WaitingRoomLevel extends Level {
 
 
-    public WaitingRoomLevel() {
-        super(20, 10, new Bitmap[]{WaitingGameView.loadImage(R.drawable.ground), WaitingGameView.loadImage(R.drawable.wall)}, "Salle d'attente");
+    public WaitingRoomLevel(WaitingGameView gameView) {
+        super(gameView, 20, 10, new Bitmap[]{WaitingGameView.loadImage(R.drawable.ground), WaitingGameView.loadImage(R.drawable.wall)}, "Salle d'attente");
     }
 
     @Override

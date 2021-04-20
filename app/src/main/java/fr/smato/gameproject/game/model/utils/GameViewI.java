@@ -22,6 +22,8 @@ public interface GameViewI {
     SurfaceHolder getSurfaceHolder();
     int getScreenWidth();
     int getScreenHeight();
+    double resizerH(double i);
+    double resizerW(double i);
 
     //hoster
     int getId();

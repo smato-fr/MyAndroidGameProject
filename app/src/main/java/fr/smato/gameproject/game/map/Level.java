@@ -3,7 +3,9 @@ package fr.smato.gameproject.game.map;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
+import fr.smato.gameproject.game.GameView;
 import fr.smato.gameproject.game.WaitingGameView;
+import fr.smato.gameproject.game.model.utils.GameViewI;
 
 public abstract class Level {
 
@@ -17,7 +19,10 @@ public abstract class Level {
     private final String roomName;
 
 
-    public Level(int mapWidth, int mapHeight, Bitmap textures[], String roomName) {
+    protected final GameViewI gameView;
+
+    public Level(GameViewI gameView, int mapWidth, int mapHeight, Bitmap textures[], String roomName) {
+        this.gameView = gameView;
         this.mapWidht = mapWidth;
         this.mapHeight = mapHeight;
         this.tileMap = new int[mapHeight][mapWidth];

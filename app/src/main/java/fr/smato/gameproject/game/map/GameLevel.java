@@ -6,15 +6,17 @@ import android.graphics.Canvas;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.smato.gameproject.game.GameView;
 import fr.smato.gameproject.game.model.drawable.LevelEntity;
+import fr.smato.gameproject.game.model.utils.Interactive;
 
 public abstract class GameLevel extends Level {
 
 
     protected List<LevelEntity> entities = new ArrayList<>();
 
-    public GameLevel(int mapWidth, int mapHeight, Bitmap[] textures, String roomName) {
-        super(mapWidth, mapHeight, textures, roomName);
+    public GameLevel(GameView gameView, int mapWidth, int mapHeight, Bitmap[] textures, String roomName) {
+        super(gameView, mapWidth, mapHeight, textures, roomName);
     }
 
 
@@ -36,5 +38,11 @@ public abstract class GameLevel extends Level {
         for (LevelEntity entity : entities) {
             entity.draw(canvas);
         }
+    }
+
+    public void onInteract() {
+        for (LevelEntity entity : entities)
+            if (entity instanceof Interactive)
+                ((Interactive) entity).onInteract();
     }
 }

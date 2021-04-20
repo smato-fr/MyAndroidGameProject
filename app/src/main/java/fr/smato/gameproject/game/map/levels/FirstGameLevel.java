@@ -2,12 +2,17 @@ package fr.smato.gameproject.game.map.levels;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.smato.gameproject.R;
 import fr.smato.gameproject.game.GameView;
 import fr.smato.gameproject.game.WaitingGameView;
 import fr.smato.gameproject.game.map.GameLevel;
+import fr.smato.gameproject.game.model.drawable.Chest;
 import fr.smato.gameproject.game.model.drawable.LevelEntity;
 import fr.smato.gameproject.game.model.objects.Location;
+import fr.smato.gameproject.game.model.utils.Interactive;
 import fr.smato.gameproject.utils.callback.Event;
 
 public class FirstGameLevel extends GameLevel {
@@ -15,13 +20,12 @@ public class FirstGameLevel extends GameLevel {
     private LevelEntity switchLevelEntity;
 
 
+    private Chest chest1, chest2;
 
-
-    public FirstGameLevel() {
-        super(20, 10, new Bitmap[]{
+    public FirstGameLevel(GameView gameView) {
+        super(gameView, 20, 10, new Bitmap[]{
                 WaitingGameView.loadImage(R.drawable.ground),
-                WaitingGameView.loadImage(R.drawable.wall),
-                WaitingGameView.loadImage(R.drawable.chest_closed),
+                WaitingGameView.loadImage(R.drawable.wall)
         }, "Salle 1");
     }
 
@@ -41,17 +45,23 @@ public class FirstGameLevel extends GameLevel {
         tileMap[mapHeight/2][mapWidht-1] = 0;
         tileMap[mapHeight/2-1][mapWidht-1] = 0;
 
-        tileMap[1][mapWidht/2] = 2;
 
         switchLevelEntity = new LevelEntity(GameView.INSTANCE.getContext(), GameView.INSTANCE, new Event() {
             @Override
             public void onEvent() {
-                GameView.INSTANCE.changeLevel(new SecondGameLevel(), 0.1f, 0.5f);
+                GameView.INSTANCE.changeLevel(new SecondGameLevel((GameView) gameView), 0.1f, 0.5f);
             }
         });
         switchLevelEntity.setVisible(false);
 
         super.entities.add(switchLevelEntity);
+
+
+        chest1 = new Chest(GameView.INSTANCE.getContext(), GameView.INSTANCE);
+        chest2 = new Chest(GameView.INSTANCE.getContext(), GameView.INSTANCE);
+
+        entities.add(chest1);
+        entities.add(chest2);
     }
 
     @Override
@@ -59,6 +69,8 @@ public class FirstGameLevel extends GameLevel {
         super.resize(screenWidth, screenHeight);
 
         switchLevelEntity.resize(new Location(screenWidth*1.1f, screenHeight/2), (int) tileHeigth*2);
+        chest1.resize(new Location(screenWidth/2, tileWidth*1.1), (int) tileWidth*2, (int) tileWidth,  (int)tileHeigth);
+        chest2.resize(new Location(tileWidth*1.1, tileHeigth/2),  (int) tileWidth*2,  (int) tileWidth,  (int) tileHeigth);
 
     }
 

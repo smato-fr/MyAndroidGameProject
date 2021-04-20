@@ -84,7 +84,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         //init popups
         this.chatPopup = new GameMessagePopup(getContext(), this, "Salle 1");
 
-        this.mapManager = new MapManager(this, new FirstGameLevel());
+        this.mapManager = new MapManager(this, new FirstGameLevel(this));
 
         player = new Player(this, gameId, getMapManager().getLevel().getRoomName(), true);
 
@@ -100,7 +100,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
                 }),actionButton.newButtonAction(R.drawable.btn_game_interact, new Event() {
                     @Override
                     public void onEvent() {
-
+                        ((GameLevel) mapManager.getLevel()).onInteract();
                     }
                 }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
                     @Override
@@ -192,7 +192,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         mapManager.resize(screenWidth, screenHeight);
         joyStick.resize(new Location(resizerW(120), resizerH(800)), (int) resizerW(80), (int) resizerW(40));
         player.resize((int) resizerH(50));
-        actionButton.resize(new Location(resizerW(800), resizerH(670)), (int) resizerW(150), (int) resizerW(150), (int) resizerH(260));
+        actionButton.resize(new Location(resizerW(800), resizerH(670)), (int) resizerW(160), (int) resizerW(60), (int) resizerH(300));
         for (Player p : players.values()) {
             p.resize((int) resizerH(40));
         }
@@ -333,13 +333,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
 
 
-
+    @Override
     public double resizerW(double i) {
 
         return i/1000*screenWidth;
 
     }
 
+    @Override
     public double resizerH(double i) {
 
         return i/1000*screenHeight;
