@@ -3,12 +3,15 @@ package fr.smato.gameproject.game.map;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
+import fr.smato.gameproject.R;
 import fr.smato.gameproject.game.GameView;
 import fr.smato.gameproject.game.WaitingGameView;
 import fr.smato.gameproject.game.model.utils.GameViewI;
 
 public abstract class Level {
 
+    public final static Bitmap TEXTURE_GROUND =  WaitingGameView.loadImage(R.drawable.plancher_1080_1080);
+    public final static Bitmap TEXTURE_WALL =  WaitingGameView.loadImage(R.drawable.wall);
 
     protected int[][] tileMap;
     protected Bitmap textures[];

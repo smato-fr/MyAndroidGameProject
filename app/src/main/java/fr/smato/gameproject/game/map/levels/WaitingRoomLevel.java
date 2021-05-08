@@ -2,15 +2,18 @@ package fr.smato.gameproject.game.map.levels;
 
 import android.graphics.Bitmap;
 
-import fr.smato.gameproject.R;
 import fr.smato.gameproject.game.WaitingGameView;
 import fr.smato.gameproject.game.map.Level;
+
 
 public class WaitingRoomLevel extends Level {
 
 
     public WaitingRoomLevel(WaitingGameView gameView) {
-        super(gameView, 20, 10, new Bitmap[]{WaitingGameView.loadImage(R.drawable.ground), WaitingGameView.loadImage(R.drawable.wall)}, "Salle d'attente");
+        super(gameView, 20, 10, new Bitmap[]{
+                TEXTURE_GROUND,
+                TEXTURE_WALL
+        }, "Salle d'attente");
     }
 
     @Override

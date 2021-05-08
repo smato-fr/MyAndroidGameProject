@@ -32,7 +32,6 @@ public class Chest extends LevelEntity implements Interactive {
             public void onEvent() {
                 image = chest_closed_near;
                 near = true;
-                Log.d("game", "Update: chest near  !");
             }
         });
 
@@ -60,7 +59,6 @@ public class Chest extends LevelEntity implements Interactive {
             else if (!isTouched(game.getPlayerEntity().getX(), game.getPlayerEntity().getY())) {
                 near = false;
                 image = chest_closed;
-                Log.d("TAG", "update: nope...");
             }
 
 

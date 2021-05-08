@@ -38,6 +38,7 @@ import fr.smato.gameproject.game.model.objects.Location;
 import fr.smato.gameproject.game.model.objects.Player;
 import fr.smato.gameproject.game.model.utils.GameViewI;
 import fr.smato.gameproject.popup.GameMessagePopup;
+import fr.smato.gameproject.popup.GameNotePopup;
 import fr.smato.gameproject.utils.callback.Event;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, GameViewI {
@@ -58,7 +59,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
     private DatabaseReference reference;
     private final String gameId;
+
     private GameMessagePopup chatPopup;
+    private GameNotePopup notePopup;
 
     private Map<String, Player> players = new HashMap<>();
 
@@ -83,6 +86,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
         //init popups
         this.chatPopup = new GameMessagePopup(getContext(), this, "Salle 1");
+        this.notePopup = new GameNotePopup(getContext(), this);
 
         this.mapManager = new MapManager(this, new FirstGameLevel(this));
 

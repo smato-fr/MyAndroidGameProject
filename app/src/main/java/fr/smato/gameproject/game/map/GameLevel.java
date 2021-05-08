@@ -12,7 +12,6 @@ import fr.smato.gameproject.game.model.utils.Interactive;
 
 public abstract class GameLevel extends Level {
 
-
     protected List<LevelEntity> entities = new ArrayList<>();
 
     public GameLevel(GameView gameView, int mapWidth, int mapHeight, Bitmap[] textures, String roomName) {

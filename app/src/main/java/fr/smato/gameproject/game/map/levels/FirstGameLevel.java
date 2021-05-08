@@ -24,8 +24,8 @@ public class FirstGameLevel extends GameLevel {
 
     public FirstGameLevel(GameView gameView) {
         super(gameView, 20, 10, new Bitmap[]{
-                WaitingGameView.loadImage(R.drawable.ground),
-                WaitingGameView.loadImage(R.drawable.wall)
+               TEXTURE_GROUND,
+                TEXTURE_WALL
         }, "Salle 1");
     }
 

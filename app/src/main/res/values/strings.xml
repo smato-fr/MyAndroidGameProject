@@ -25,4 +25,5 @@
     <string name="friend_invite_send">Envoyer une demande d\'ami</string>
     <string name="game_chat_salon">Salle d\'attente</string>
     <string name="error">Une erreur est survenue !</string>
+    <string name="game_note">Notes</string>
 </resources>

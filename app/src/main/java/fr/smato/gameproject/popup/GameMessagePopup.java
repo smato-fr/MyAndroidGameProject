@@ -44,10 +44,7 @@ public class GameMessagePopup extends Dialog {
     private List<Chat> chats;
     private RecyclerView recyclerView;
 
-    private DatabaseReference reference;
-
     private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'à' HH:mm");
-
 
     public GameMessagePopup(@NonNull Context context, GameViewI gameView, String name) {
         super(context);

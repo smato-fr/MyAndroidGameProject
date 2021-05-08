@@ -15,7 +15,9 @@ public class SecondGameLevel extends GameLevel {
     private LevelEntity switchLevelEntity;
 
     public SecondGameLevel(GameView gameView) {
-        super(gameView, 20, 10, new Bitmap[]{WaitingGameView.loadImage(R.drawable.ground), WaitingGameView.loadImage(R.drawable.wall)}, "Salle 2");
+        super(gameView, 20, 10, new Bitmap[]{
+                TEXTURE_GROUND,
+                TEXTURE_WALL}, "Salle 2");
     }
 
     @Override
