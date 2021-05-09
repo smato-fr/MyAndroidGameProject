@@ -37,6 +37,56 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/bar_layout"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        >
+
+        <ImageButton
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:src="@drawable/ic_home"
+
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2sdp"
+            android:layout_marginLeft="@dimen/_1sdp"
+            android:layout_marginRight="@dimen/_1sdp"
+            android:background="@color/colorPrimaryDark" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="@dimen/_2sdp"
+            android:layout_marginLeft="@dimen/_2sdp"/>
+
+    </LinearLayout>
+
+
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="@dimen/_2sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bar_layout"
+        android:layout_toRightOf="@id/linear_layout"
+        android:background="@color/colorPrimary"
+        />
+
+    <FrameLayout
+        android:id="@+id/game_note_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/separator"
+        android:layout_below="@id/bar_layout"/>
 
 
 </RelativeLayout>

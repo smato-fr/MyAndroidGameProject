@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/note_title"
+        style="@style/TitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:text="@string/popup_note_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title_name"
+        style="@style/SubTitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:text="@string/popup_note_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/note_title" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/username"
+        style="@style/DefaultTextStyle"
+        android:layout_marginLeft="@dimen/defaultMargin"
+        app:layout_constraintBottom_toBottomOf="@+id/title_name"
+        app:layout_constraintStart_toEndOf="@+id/title_name"
+        app:layout_constraintTop_toTopOf="@+id/title_name" />
+
+    <TextView
+        android:id="@+id/title_colors"
+        style="@style/SubTitleTextStyle"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/popup_note_colors"
+        app:layout_constraintStart_toStartOf="@+id/title_name"
+        app:layout_constraintTop_toBottomOf="@+id/title_name" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_colors"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="@+id/title_colors"
+        app:layout_constraintTop_toBottomOf="@+id/title_colors" />
+
+    <TextView
+        android:id="@+id/title_roles"
+        style="@style/SubTitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:text="@string/popup_note_roles"
+        app:layout_constraintStart_toStartOf="@+id/recycler_view_colors"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_colors" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_roles"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="@+id/title_roles"
+        app:layout_constraintTop_toBottomOf="@+id/title_roles" />
+
+    <EditText
+        android:layout_width="@dimen/_170sdp"
+        android:layout_height="@dimen/_200sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recycler_view_colors"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/lightGray"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

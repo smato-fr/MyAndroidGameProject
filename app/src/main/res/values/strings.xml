@@ -26,4 +26,8 @@
     <string name="game_chat_salon">Salle d\'attente</string>
     <string name="error">Une erreur est survenue !</string>
     <string name="game_note">Notes</string>
+    <string name="popup_note_info">Informations:</string>
+    <string name="popup_note_name">Nom :</string>
+    <string name="popup_note_colors">Couleurs :</string>
+    <string name="popup_note_roles">Roles :</string>
 </resources>

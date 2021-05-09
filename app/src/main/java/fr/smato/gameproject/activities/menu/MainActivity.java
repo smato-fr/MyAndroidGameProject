@@ -28,10 +28,6 @@ public class MainActivity extends AppCompatActivity implements Updater {
 
     private ImageView homeButton;
 
-
-    private FirebaseUser firebaseUser;
-    private DatabaseReference reference;
-
     private HomeMainFragment homeMainFragment;
     private SocialMainFragment socialMainFragment;
 
