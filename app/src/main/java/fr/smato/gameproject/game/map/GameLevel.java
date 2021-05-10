@@ -14,8 +14,8 @@ public abstract class GameLevel extends Level {
 
     protected List<LevelEntity> entities = new ArrayList<>();
 
-    public GameLevel(GameView gameView, int mapWidth, int mapHeight, Bitmap[] textures, String roomName) {
-        super(gameView, mapWidth, mapHeight, textures, roomName);
+    public GameLevel(GameView gameView, Bitmap[] textures, boolean solids[], String roomName) {
+        super(gameView, textures, solids, roomName);
     }
 
 

@@ -15,22 +15,22 @@ public class SecondGameLevel extends GameLevel {
     private LevelEntity switchLevelEntity;
 
     public SecondGameLevel(GameView gameView) {
-        super(gameView, 20, 10, new Bitmap[]{
+        super(gameView, new Bitmap[]{
                 TEXTURE_GROUND,
-                TEXTURE_WALL}, "Salle 2");
+                TEXTURE_WALL}, new boolean[]{false, true}, "Salle 2");
     }
 
     @Override
     public void init() {
 
-        for (int x = 0; x < mapWidht; x++) {
+        for (int x = 0; x < mapWidth; x++) {
             tileMap[0][x] = 1;
             tileMap[mapHeight-1][x] = 1;
         }
 
         for (int y = 1; y < mapHeight; y++) {
             tileMap[y][0] = 1;
-            tileMap[y][mapWidht-1] = 1;
+            tileMap[y][mapWidth-1] = 1;
         }
 
         tileMap[mapHeight/2][0] = 0;

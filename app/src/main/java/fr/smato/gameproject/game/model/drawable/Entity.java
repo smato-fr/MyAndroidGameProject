@@ -42,7 +42,7 @@ public class Entity {
 
 
         if (vx != 0 || vy != 0) {
-            double scaleX = 1d*game.getMapManager().getLevel().getMapWidht()/game.getScreenWidth();
+            double scaleX = 1d*game.getMapManager().getLevel().getMapWidth()/game.getScreenWidth();
             double scaleY = 1d*game.getMapManager().getLevel().getMapHeight()/game.getScreenHeight();
 
             int X = (int) ( (location.x) * scaleX);

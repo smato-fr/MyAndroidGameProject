@@ -2,6 +2,7 @@ package fr.smato.gameproject.game.map;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import fr.smato.gameproject.R;
 import fr.smato.gameproject.game.GameView;
@@ -11,12 +12,17 @@ import fr.smato.gameproject.game.model.utils.GameViewI;
 public abstract class Level {
 
     public final static Bitmap TEXTURE_GROUND =  WaitingGameView.loadImage(R.drawable.plancher_1080_1080);
+    public final static Bitmap TEXTURE_WALLH1 =  WaitingGameView.loadImage(R.drawable.murh1_1080_1080);
+    public final static Bitmap TEXTURE_WALLH2 =  WaitingGameView.loadImage(R.drawable.murh2_1080_1080);
     public final static Bitmap TEXTURE_WALL =  WaitingGameView.loadImage(R.drawable.wall);
+
 
     protected int[][] tileMap;
     protected Bitmap textures[];
+    protected boolean solidTiles[];
 
-    protected int mapWidht, mapHeight;
+    protected final int mapWidth = 18;
+    protected final int mapHeight = 11;
     protected float tileWidth, tileHeigth;
 
     private final String roomName;
@@ -24,19 +30,20 @@ public abstract class Level {
 
     protected final GameViewI gameView;
 
-    public Level(GameViewI gameView, int mapWidth, int mapHeight, Bitmap textures[], String roomName) {
+    public Level(GameViewI gameView, Bitmap textures[], boolean solids[], String roomName) {
         this.gameView = gameView;
-        this.mapWidht = mapWidth;
-        this.mapHeight = mapHeight;
         this.tileMap = new int[mapHeight][mapWidth];
         this.textures = textures;
+        this.solidTiles = solids;
         this.roomName = roomName;
     }
 
     public  void resize(int screenWidth, int screenHeight) {
 
-        tileWidth = (float) (screenWidth/mapWidht);
+        tileWidth = (float) (screenWidth/mapWidth);
         tileHeigth = (float) (screenHeight/mapHeight);
+
+        Log.d("TAG", "resize: "+tileWidth+"/"+tileHeigth);
 
         for (int i = 0; i < textures.length; i++) {
             textures[i] = WaitingGameView.resizeImage(textures[i], (int) tileWidth, (int) tileHeigth);
@@ -49,15 +56,15 @@ public abstract class Level {
     public void draw(Canvas canvas) {
 
        for (int y = 0; y < mapHeight; y++) {
-           for (int x = 0; x < mapWidht; x++) {
+           for (int x = 0; x < mapWidth; x++) {
                canvas.drawBitmap(textures[tileMap[y][x]], x*tileWidth, y*tileHeigth, null);
            }
        }
 
     }
 
-    public int getMapWidht() {
-        return mapWidht;
+    public int getMapWidth() {
+        return mapWidth;
     }
 
     public int getMapHeight() {
@@ -65,9 +72,9 @@ public abstract class Level {
     }
 
     public boolean isSolidTile(int y, int x) {
-        if (x >= mapWidht || y >= mapHeight) return false;
+        if (x >= mapWidth || y >= mapHeight) return false;
 
-        return tileMap[y][x] != 0;
+        return solidTiles[tileMap[y][x]];
 
     }
 

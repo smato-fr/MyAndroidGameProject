@@ -23,27 +23,27 @@ public class FirstGameLevel extends GameLevel {
     private Chest chest1, chest2;
 
     public FirstGameLevel(GameView gameView) {
-        super(gameView, 20, 10, new Bitmap[]{
+        super(gameView, new Bitmap[]{
                TEXTURE_GROUND,
                 TEXTURE_WALL
-        }, "Salle 1");
+        }, new boolean[]{false, true}, "Salle 1");
     }
 
     @Override
     public void init() {
 
-        for (int x = 0; x < mapWidht; x++) {
+        for (int x = 0; x < mapWidth; x++) {
             tileMap[0][x] = 1;
             tileMap[mapHeight-1][x] = 1;
         }
 
         for (int y = 1; y < mapHeight; y++) {
             tileMap[y][0] = 1;
-            tileMap[y][mapWidht-1] = 1;
+            tileMap[y][mapWidth-1] = 1;
         }
 
-        tileMap[mapHeight/2][mapWidht-1] = 0;
-        tileMap[mapHeight/2-1][mapWidht-1] = 0;
+        tileMap[mapHeight/2][mapWidth-1] = 0;
+        tileMap[mapHeight/2-1][mapWidth-1] = 0;
 
 
         switchLevelEntity = new LevelEntity(GameView.INSTANCE.getContext(), GameView.INSTANCE, new Event() {
