@@ -43,7 +43,7 @@ public abstract class Level {
         tileWidth = (float) (screenWidth/mapWidth);
         tileHeigth = (float) (screenHeight/mapHeight);
 
-        Log.d("TAG", "resize: "+tileWidth+"/"+tileHeigth);
+
 
         for (int i = 0; i < textures.length; i++) {
             textures[i] = WaitingGameView.resizeImage(textures[i], (int) tileWidth, (int) tileHeigth);

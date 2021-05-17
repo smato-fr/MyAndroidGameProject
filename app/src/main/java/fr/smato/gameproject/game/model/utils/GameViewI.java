@@ -6,6 +6,9 @@ import android.view.SurfaceHolder;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.List;
+import java.util.Map;
+
 import fr.smato.gameproject.activities.game.GameActivity;
 import fr.smato.gameproject.game.map.MapManager;
 import fr.smato.gameproject.game.model.drawable.PlayerEntity;
@@ -48,4 +51,6 @@ public interface GameViewI {
     void movePlayer();
 
     void sendMessage(String id, String msg);
+
+    Map<String, Player> getPlayers();
 }

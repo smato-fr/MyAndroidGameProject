@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import fr.smato.gameproject.DataBaseManager;
+import fr.smato.gameproject.game.GameView;
 import fr.smato.gameproject.game.model.drawable.Entity;
 import fr.smato.gameproject.game.model.drawable.PlayerEntity;
 import fr.smato.gameproject.game.model.utils.GameViewI;
@@ -53,6 +54,8 @@ public class Player {
                         return;
                     }
                     Player.this.user = snapshot.getValue(User.class);
+                    if (GameView.INSTANCE != null)
+                        GameView.INSTANCE.onPlayerLoaded();
                 }
 
                 @Override

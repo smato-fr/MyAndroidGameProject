@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/_480sdp"
-    android:layout_height="@dimen/_250sdp"
+    android:layout_width="@dimen/_510sdp"
+    android:layout_height="@dimen/_285sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/lightGray"
-    android:id="@+id/layout">
+    android:id="@+id/game_note_layout">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar_layout"
@@ -30,6 +30,16 @@
                 style="@style/SubTitleTextStyle"
                 android:text="@string/game_note"
                 android:layout_centerVertical="true"/>
+
+            <ImageButton
+                android:id="@+id/close_btn"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_close" />
+
+
 
 
         </RelativeLayout>
@@ -62,6 +72,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"

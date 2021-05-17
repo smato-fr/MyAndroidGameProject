@@ -109,21 +109,14 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
                 public void onEvent() {
                     chatPopup.show();
                 }
-            }),actionButton.newButtonAction(R.drawable.btn_game_interact, new Event() {
-                @Override
-                public void onEvent() {
+            }),actionButton.newButtonAction(R.drawable.btn_game_interact, () -> {
 
-                }
-            }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
-                @Override
-                public void onEvent() {
+            }),actionButton.newButtonAction(R.drawable.ic_test, () -> {
 
-                }
-            }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
-                @Override
-                public void onEvent() {
 
-                }
+
+            }),actionButton.newButtonAction(R.drawable.ic_test, () -> {
+
             })
 
         ));
@@ -469,5 +462,11 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
 
     public TextView getWaitingText() {
         return waitingText;
+    }
+
+
+    @Override
+    public Map<String, Player> getPlayers() {
+        return players;
     }
 } // class GameView

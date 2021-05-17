@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -38,10 +39,10 @@ import fr.smato.gameproject.game.model.objects.Location;
 import fr.smato.gameproject.game.model.objects.Player;
 import fr.smato.gameproject.game.model.utils.GameViewI;
 import fr.smato.gameproject.popup.GameMessagePopup;
-import fr.smato.gameproject.popup.GameNotePopup;
-import fr.smato.gameproject.utils.callback.Event;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, GameViewI {
+
+
 
     private final Player player;
     private final JoyStick joyStick;
@@ -61,7 +62,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
     private final String gameId;
 
     private GameMessagePopup chatPopup;
-    private GameNotePopup notePopup;
+
 
     private Map<String, Player> players = new HashMap<>();
 
@@ -86,7 +87,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
         //init popups
         this.chatPopup = new GameMessagePopup(getContext(), this, "Salle 1");
-        this.notePopup = new GameNotePopup(getContext(), this);
+
 
         this.mapManager = new MapManager(this, new FirstGameLevel(this));
 
@@ -96,38 +97,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         joyStick = new JoyStick(getContext(), this);
         actionButton = new ActionButton(getContext(), this);
         actionButton.setActionButtons(Arrays.asList(
-                actionButton.newButtonAction(R.drawable.send, new Event() {
-                    @Override
-                    public void onEvent() {
-                        chatPopup.show();
-                    }
-                }),actionButton.newButtonAction(R.drawable.btn_game_interact, new Event() {
-                    @Override
-                    public void onEvent() {
-                        ((GameLevel) mapManager.getLevel()).onInteract();
-                    }
-                }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
-                    @Override
-                    public void onEvent() {
-
-                    }
-                }),actionButton.newButtonAction(R.drawable.ic_test, new Event() {
-                    @Override
-                    public void onEvent() {
-
-                    }
-                })
+                actionButton.newButtonAction(R.drawable.send, () -> chatPopup.show()),
+                actionButton.newButtonAction(R.drawable.btn_game_interact, () -> ((GameLevel) mapManager.getLevel()).onInteract()),
+                actionButton.newButtonAction(R.drawable.ic_test, () -> {
+                    getGameActivity().showGameNote();
+                    Log.d("TAG", "GameView: ");
+                }),
+                actionButton.newButtonAction(R.drawable.ic_test, () -> {})
 
         ));
-        joyStick.setOnMove(new Event() {
-            @Override
-            public void onEvent() {
-                double vx = joyStick.getActuatorX()*PlayerEntity.SPEED_MAX;
-                double vy = joyStick.getActuatorY()*PlayerEntity.SPEED_MAX;
+        joyStick.setOnMove(() -> {
+            double vx = joyStick.getActuatorX()*PlayerEntity.SPEED_MAX;
+            double vy = joyStick.getActuatorY()*PlayerEntity.SPEED_MAX;
 
-                player.getEntity().setVx(vx);
-                player.getEntity().setVy(vy);
-            }
+            player.getEntity().setVx(vx);
+            player.getEntity().setVy(vy);
         });
 
 
@@ -163,7 +147,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
                 }
 
                 players = newPlayersList;
-
             }
 
             @Override
@@ -204,6 +187,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
         inited = true;
     }
+
+
+
+
 
 
     //update components and game
@@ -308,6 +295,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
+
         double currentX = (double) event.getX();
         double currentY = (double) event.getY();
 
@@ -370,6 +358,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         return Bitmap.createScaledBitmap(image, weight, height, false);
     }
 
+
+
+    public void onPlayerLoaded() {
+
+        getGameActivity().update();
+
+    }
 
 
     //TODO GAME MANAGER
@@ -442,6 +437,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         getMapManager().sendMessage(sender, msg);
     }
 
+    @Override
+    public Map<String, Player> getPlayers() {
+        return players;
+    }
+
     public static Context getCurrentContext() {
         return WaitingGameView.INSTANCE.getContext();
     }
@@ -483,4 +483,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         getMapManager().resize(screenWidth, screenHeight);
         movePlayer();
     }
+
+
 }
