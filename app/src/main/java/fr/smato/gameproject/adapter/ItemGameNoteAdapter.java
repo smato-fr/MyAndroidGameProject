@@ -17,15 +17,20 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.smato.gameproject.R;
+import fr.smato.gameproject.fragments.notepop.GameNotePlayerFragment;
+import fr.smato.gameproject.popup.GameNotePopupLayout;
 
 public class ItemGameNoteAdapter extends RecyclerView.Adapter<ItemGameNoteAdapter.ViewHolder>{
 
     private final List<String> list;
     private Context context;
 
-    public ItemGameNoteAdapter(Context context, List<String> list) {
+    private GameNotePopupLayout parent;
+
+    public ItemGameNoteAdapter(Context context, List<String> list, GameNotePopupLayout parent) {
         this.context = context;
         this.list = list;
+        this.parent = parent;
     }
 
     @NonNull
@@ -46,6 +51,8 @@ public class ItemGameNoteAdapter extends RecyclerView.Adapter<ItemGameNoteAdapte
         } else {
             Glide.with(context).load(image).into(holder.profileImage);
         }
+
+        holder.profileImage.setOnClickListener(v -> parent.loadFragment(new GameNotePlayerFragment(context)));
     }
 
 

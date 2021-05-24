@@ -1,5 +1,6 @@
 package fr.smato.gameproject.fragments.notepop;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,18 +8,20 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 
 import fr.smato.gameproject.R;
 
-public class GameNoteHomeFragment extends DialogFragment {
+public class GameNoteHomeFragment extends ConstraintLayout {
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.popup_game_note_fragment_home, container, false);
+    public GameNoteHomeFragment(Context context) {
+        super(context);
 
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.popup_game_note_fragment_home, this);
 
-        return view;
     }
+
+
 }

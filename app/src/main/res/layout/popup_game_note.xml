@@ -57,6 +57,7 @@
         >
 
         <ImageButton
+            android:id="@+id/btn_home"
             android:layout_width="@dimen/_45sdp"
             android:layout_height="@dimen/_45sdp"
             android:src="@drawable/ic_home"
