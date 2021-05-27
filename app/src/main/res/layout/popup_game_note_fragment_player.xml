@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
     <TextView
         android:id="@+id/note_title"
@@ -79,12 +80,12 @@
     <EditText
         android:layout_width="@dimen/_170sdp"
         android:layout_height="@dimen/_200sdp"
+        android:background="@color/lightGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recycler_view_colors"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/lightGray"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/note_title"
+        android:layout_marginRight="@dimen/defaultMargin"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

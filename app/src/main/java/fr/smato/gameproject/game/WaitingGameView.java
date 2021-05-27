@@ -42,6 +42,7 @@ import fr.smato.gameproject.game.model.enums.GameState;
 import fr.smato.gameproject.game.model.objects.Location;
 import fr.smato.gameproject.game.model.objects.Player;
 import fr.smato.gameproject.game.model.utils.GameViewI;
+import fr.smato.gameproject.game.model.utils.PlayerList;
 import fr.smato.gameproject.popup.GameMessagePopup;
 import fr.smato.gameproject.utils.callback.Event;
 
@@ -66,7 +67,7 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
     private final String gameId;
     private GameMessagePopup chatPopup;
 
-    private Map<String, Player> players = new HashMap<>();
+    private PlayerList players = new PlayerList();
 
     private Hoster hoster;
 
@@ -136,7 +137,7 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
        reference.child("players").child("inGame").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (Player p : players.values()) {
+                for (Player p : players) {
                     p.destroy();
                 }
                 players.clear();
@@ -147,7 +148,7 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
 
                     Player p = new Player(WaitingGameView.this, userId, getMapManager().getLevel().getRoomName(), false);
                     p.resize((int) resizerH(40));
-                    players.put(userId, p);
+                    players.add(p);
                 }
 
                 waitingText.setText((players.size()+1) + " joueur(s) connecté(s)");
@@ -216,7 +217,7 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
         joyStick.resize(new Location(resizerW(120), resizerH(800)), (int) resizerW(80), (int) resizerW(40));
         player.resize(new Location(screenWidth/2, screenHeight/2), (int) resizerH(50));
         actionButton.resize(new Location(resizerW(800), resizerH(670)), (int) resizerW(160), (int) resizerW(60), (int) resizerH(300));
-        for (Player p : players.values()) {
+        for (Player p : players) {
             p.resize((int) resizerH(40));
         }
 
@@ -248,7 +249,7 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
 
         //entity
         player.draw(canvas);
-        for (Player p : players.values()) {
+        for (Player p : players) {
             p.getEntity().draw(canvas);
         }
         for (Entity e : entities) {
@@ -466,7 +467,7 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
 
 
     @Override
-    public Map<String, Player> getPlayers() {
+    public PlayerList getPlayers() {
         return players;
     }
 } // class GameView

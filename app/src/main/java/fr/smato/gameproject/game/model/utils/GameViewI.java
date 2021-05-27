@@ -52,5 +52,5 @@ public interface GameViewI {
 
     void sendMessage(String id, String msg);
 
-    Map<String, Player> getPlayers();
+    PlayerList getPlayers();
 }

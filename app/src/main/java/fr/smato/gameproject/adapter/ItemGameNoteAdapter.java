@@ -13,24 +13,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.smato.gameproject.R;
 import fr.smato.gameproject.fragments.notepop.GameNotePlayerFragment;
+import fr.smato.gameproject.game.model.objects.Player;
+import fr.smato.gameproject.game.model.utils.PlayerList;
+import fr.smato.gameproject.model.User;
 import fr.smato.gameproject.popup.GameNotePopupLayout;
 
 public class ItemGameNoteAdapter extends RecyclerView.Adapter<ItemGameNoteAdapter.ViewHolder>{
 
-    private final List<String> list;
-    private Context context;
+    private final PlayerList list;
+    private static GameNotePopupLayout parent;
 
-    private GameNotePopupLayout parent;
+    private static Context context;
 
-    public ItemGameNoteAdapter(Context context, List<String> list, GameNotePopupLayout parent) {
-        this.context = context;
-        this.list = list;
+    public ItemGameNoteAdapter(GameNotePopupLayout parent) {
+        this.context = parent.getContext();
         this.parent = parent;
+
+        list = parent.getGameActivity().getGameView().getPlayers();
     }
 
     @NonNull
@@ -44,7 +49,9 @@ public class ItemGameNoteAdapter extends RecyclerView.Adapter<ItemGameNoteAdapte
     @Override
     public void onBindViewHolder(@NonNull ItemGameNoteAdapter.ViewHolder holder, int position) {
 
-        String image = list.get(position);
+        Player p = list.get(position);
+
+        String image = p.getUser().getImageURL();
 
         if (image.equals("default")) {
             holder.profileImage.setImageResource(R.mipmap.ic_launcher);
@@ -52,7 +59,30 @@ public class ItemGameNoteAdapter extends RecyclerView.Adapter<ItemGameNoteAdapte
             Glide.with(context).load(image).into(holder.profileImage);
         }
 
-        holder.profileImage.setOnClickListener(v -> parent.loadFragment(new GameNotePlayerFragment(context)));
+        holder.profileImage.setOnClickListener(v -> loadFragment(p));
+    }
+
+    private void loadFragment(Player p) {
+
+        GameNotePlayerFragment fragment;
+
+
+        //looking for player notes
+        if (p.getDatas().get("NF") != null)
+            fragment = (GameNotePlayerFragment) p.getDatas().get("NF");
+
+        else
+            fragment = new GameNotePlayerFragment(context);
+
+        updateFragment(p.getUser(), fragment);
+        parent.loadFragment(fragment);
+
+    }
+
+    private void updateFragment(User p, GameNotePlayerFragment fragment) {
+
+        fragment.name.setText(p.getUsername());
+
     }
 
 
@@ -60,6 +90,9 @@ public class ItemGameNoteAdapter extends RecyclerView.Adapter<ItemGameNoteAdapte
     public int getItemCount() {
         return list.size();
     }
+
+
+
 
 
 

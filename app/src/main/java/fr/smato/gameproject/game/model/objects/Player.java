@@ -8,6 +8,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import fr.smato.gameproject.DataBaseManager;
 import fr.smato.gameproject.game.GameView;
 import fr.smato.gameproject.game.model.drawable.Entity;
@@ -33,6 +36,10 @@ public class Player {
     private boolean valid;
 
     private Role role;
+
+
+    private Map<String, Object> datas = new HashMap<>();
+
 
     public Player(GameViewI game, String id, String room, boolean selfUser) {
         this.game = game;
@@ -142,5 +149,9 @@ public class Player {
 
     public boolean isValid() {
         return valid;
+    }
+
+    public Map<String, Object> getDatas() {
+        return datas;
     }
 }

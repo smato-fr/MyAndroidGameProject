@@ -38,6 +38,7 @@ import fr.smato.gameproject.game.model.enums.GameState;
 import fr.smato.gameproject.game.model.objects.Location;
 import fr.smato.gameproject.game.model.objects.Player;
 import fr.smato.gameproject.game.model.utils.GameViewI;
+import fr.smato.gameproject.game.model.utils.PlayerList;
 import fr.smato.gameproject.popup.GameMessagePopup;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, GameViewI {
@@ -64,7 +65,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
     private GameMessagePopup chatPopup;
 
 
-    private Map<String, Player> players = new HashMap<>();
+    private PlayerList players = new PlayerList();
 
 
     private Hoster hoster;
@@ -119,7 +120,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         reference.child("players").child("inGame").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //players.clear();
+
                 List<String> IDs = new ArrayList<>();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     if (ds.getKey().equals(DataBaseManager.currentUser.getId())) continue;
@@ -127,22 +128,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
                     IDs.add(ds.getKey());
                 }
 
-                Map<String, Player> newPlayersList = new HashMap<>();
+                PlayerList newPlayersList = new PlayerList();
 
                 for (String userId : IDs) {
 
                     if (players.containsKey(userId)) {
-                        newPlayersList.put(userId, players.get(userId));
+                        newPlayersList.add(players.get(userId));
                         players.remove(userId);
                     } else {
                         Player p = new Player(GameView.this, userId, getMapManager().getLevel().getRoomName(), false);
                         p.resize((int) resizerH(40));
-                        newPlayersList.put(userId, p);
+                        newPlayersList.add(p);
                     }
 
                 }
 
-                for (Player p : players.values()) {
+                for (Player p : players) {
                     p.destroy();
                 }
 
@@ -180,7 +181,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         joyStick.resize(new Location(resizerW(120), resizerH(800)), (int) resizerW(80), (int) resizerW(40));
         player.resize((int) resizerH(50));
         actionButton.resize(new Location(resizerW(800), resizerH(670)), (int) resizerW(160), (int) resizerW(60), (int) resizerH(300));
-        for (Player p : players.values()) {
+        for (Player p : players) {
             p.resize((int) resizerH(40));
         }
 
@@ -221,7 +222,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
         //entity
         player.draw(canvas);
-        for (Player p : players.values()) {
+        for (Player p : players) {
              if (getPlayer().getRoom().equals(p.getRoom())) p.getEntity().draw(canvas);
         }
         for (Entity e : entities) {
@@ -438,7 +439,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
     }
 
     @Override
-    public Map<String, Player> getPlayers() {
+    public PlayerList getPlayers() {
         return players;
     }
 

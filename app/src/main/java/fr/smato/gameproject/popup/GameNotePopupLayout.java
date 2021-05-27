@@ -63,6 +63,8 @@ public class GameNotePopupLayout extends RelativeLayout implements Updater {
 
 
         loadFragment(homeFragment);
+
+
     }
 
 
@@ -73,16 +75,13 @@ public class GameNotePopupLayout extends RelativeLayout implements Updater {
 
     @Override
     public void update() {
-        Map<String, Player> players = gameActivity.getGameView().getPlayers();
-        List<String> list = new ArrayList<>();
-        for (Player pls : players.values()) {
-            if (pls.getUser() != null)
-                list.add(pls.getUser().getImageURL());
-        }
-
-
-        adapter = new ItemGameNoteAdapter(getContext(), list, this);
+        adapter = new ItemGameNoteAdapter(this);
         playersView.setLayoutManager(new LinearLayoutManager(getContext()));
         playersView.setAdapter(adapter);
+    }
+
+
+    public GameActivity getGameActivity() {
+        return gameActivity;
     }
 }
