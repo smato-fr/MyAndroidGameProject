@@ -71,19 +71,16 @@ public class ItemGameNoteAdapter extends RecyclerView.Adapter<ItemGameNoteAdapte
         if (p.getDatas().get("NF") != null)
             fragment = (GameNotePlayerFragment) p.getDatas().get("NF");
 
-        else
+        else {
             fragment = new GameNotePlayerFragment(context);
+            p.getDatas().put("NF", fragment);
+            fragment.init(p.getUser());
+        }
 
-        updateFragment(p.getUser(), fragment);
         parent.loadFragment(fragment);
 
     }
 
-    private void updateFragment(User p, GameNotePlayerFragment fragment) {
-
-        fragment.name.setText(p.getUsername());
-
-    }
 
 
     @Override

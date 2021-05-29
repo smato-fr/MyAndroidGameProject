@@ -30,7 +30,7 @@ public class ItemShopAdapter extends RecyclerView.Adapter<ItemShopAdapter.ViewHo
         return 5;
     }
 
-    //boite pour ranger tous les composants à controler
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
 
