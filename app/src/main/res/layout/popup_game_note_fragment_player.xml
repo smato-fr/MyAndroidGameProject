@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
@@ -51,12 +50,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_colors"
-        android:layout_width="@dimen/_300sdp"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="@+id/title_colors"
-        app:layout_constraintTop_toBottomOf="@+id/title_colors" />
+        app:layout_constraintTop_toBottomOf="@+id/title_colors"
+        />
 
     <TextView
         android:id="@+id/title_roles"
@@ -70,7 +70,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_roles"
-        android:layout_width="@dimen/_300sdp"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -80,6 +80,8 @@
     <EditText
         android:layout_width="@dimen/_170sdp"
         android:layout_height="@dimen/_200sdp"
+        android:hint="notes..."
+        android:gravity="top"
         android:background="@color/lightGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

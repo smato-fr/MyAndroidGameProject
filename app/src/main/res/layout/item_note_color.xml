@@ -7,7 +7,7 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/out_circle_true"
+        android:id="@+id/out_circle_yes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@color/colorPrimaryLight"
@@ -17,7 +17,7 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/out_circle_false"
+        android:id="@+id/out_circle_neutral"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@color/colorPrimaryDark"
@@ -25,6 +25,14 @@
         android:visibility="visible"
         />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/out_circle_no"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@color/ban"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -33,6 +41,9 @@
         android:layout_height="@dimen/_20sdp"
         android:layout_centerInParent="true"
         />
+
+
+
 
 
 
