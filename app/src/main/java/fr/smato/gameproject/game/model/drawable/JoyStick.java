@@ -30,6 +30,8 @@ public class JoyStick extends Entity implements Dragable {
         innerCirclePaint.setStyle(Paint.Style.FILL_AND_STROKE);
         super.paint.setColor(Color.GRAY);
         super.paint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        setTranslated(false);
     }
     public void setOnMove(Event onMove) {
         this.onMove = onMove;

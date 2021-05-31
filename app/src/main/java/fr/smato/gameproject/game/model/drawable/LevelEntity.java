@@ -27,7 +27,8 @@ public class LevelEntity extends Entity{
 
     @Override
     public void draw(Canvas canvas) {
-        if (visible) super.draw(canvas);
+        if (visible)
+            super.drawT(canvas);
     }
 
     public void setVisible(boolean visible) {

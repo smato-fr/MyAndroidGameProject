@@ -1,6 +1,7 @@
 package fr.smato.gameproject.game.model.drawable;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
@@ -22,6 +23,7 @@ public class Entity {
 
     protected double vx, vy;
 
+    private boolean translated = true;
 
     public Entity(Context context, GameViewI game) {
         this.context = context;
@@ -70,7 +72,18 @@ public class Entity {
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawCircle((float) location.x, (float) location.y, circleRadious, paint);
+        if (translated)
+            drawT(canvas);
+        else
+            canvas.drawCircle((float) location.x, (float) location.y, circleRadious, paint);
+    }
+
+    protected void drawT(Canvas canvas) {
+        canvas.drawCircle((float) location.x - game.getMapManager().getLevel().getCameraTranslationX(), (float) location.y - game.getMapManager().getLevel().getCameraTranslationY(), circleRadious, paint);;
+    }
+
+    protected void drawTI(Canvas canvas, Bitmap image) {
+        canvas.drawBitmap(image, (float) location.x - game.getMapManager().getLevel().getCameraTranslationX(), (float) location.y  - game.getMapManager().getLevel().getCameraTranslationY(), null);
     }
 
     public boolean isTouched(double currentX, double currentY) {
@@ -103,5 +116,18 @@ public class Entity {
     public void setVy(double vy) {
         this.vy = vy;
     }
+
+    public double getVx() {
+        return vx;
+    }
+
+    public double getVy() {
+        return vy;
+    }
+
+    public void setTranslated(boolean translated) {
+        this.translated = translated;
+    }
+
 
 }

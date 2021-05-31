@@ -431,6 +431,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         map.put("y", player.getEntity().getY()/screenHeight);
         map.put("room", player.getRoom());
         reference.child("players").child("list").child(DataBaseManager.currentUser.getId()).child("location").updateChildren(map);
+
+        float vx = (float) (player.getEntity().getX() - screenWidth/2);
+        float vy = (float) (player.getEntity().getY() - screenHeight/2);
+
+        getMapManager().getLevel().setTranslation(vx, vy);
+
     }
 
     @Override

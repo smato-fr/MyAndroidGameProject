@@ -67,7 +67,7 @@ public class Chest extends LevelEntity implements Interactive {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(image, (float) location.x, (float) location.y, null);
+        super.drawTI(canvas, image);
     }
 
     @Override

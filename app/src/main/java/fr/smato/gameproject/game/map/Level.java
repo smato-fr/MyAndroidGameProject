@@ -30,6 +30,11 @@ public abstract class Level {
 
     protected final GameViewI gameView;
 
+
+    private float cameraTranslationX = 0.0f;
+    private float cameraTranslationY = 0.0f;
+
+
     public Level(GameViewI gameView, Bitmap textures[], boolean solids[], String roomName) {
         this.gameView = gameView;
         this.tileMap = new int[mapHeight][mapWidth];
@@ -57,7 +62,7 @@ public abstract class Level {
 
        for (int y = 0; y < mapHeight; y++) {
            for (int x = 0; x < mapWidth; x++) {
-               canvas.drawBitmap(textures[tileMap[y][x]], x*tileWidth, y*tileHeigth, null);
+               canvas.drawBitmap(textures[tileMap[y][x]], x*tileWidth - cameraTranslationX, y*tileHeigth - cameraTranslationY, null);
            }
        }
 
@@ -80,5 +85,18 @@ public abstract class Level {
 
     public String getRoomName() {
         return roomName;
+    }
+
+    public void setTranslation(float vx, float vy) {
+        cameraTranslationX = vx;
+        cameraTranslationY = vy;
+    }
+
+    public float getCameraTranslationX() {
+        return cameraTranslationX;
+    }
+
+    public float getCameraTranslationY() {
+        return cameraTranslationY;
     }
 }
