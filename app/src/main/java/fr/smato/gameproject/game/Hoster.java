@@ -4,8 +4,10 @@ import android.widget.Button;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import fr.smato.gameproject.DataBaseManager;
+import fr.smato.gameproject.game.model.objects.Player;
 import fr.smato.gameproject.game.model.utils.GameViewI;
 
 public class Hoster {
@@ -63,6 +65,10 @@ public class Hoster {
 
         game.getReference().child("infos").child("state").setValue("playing");
 
+        Random r = new Random();
+
+        Player mendax = game.getPlayers().get(r.nextInt(game.getPlayers().size()));
+        game.getReference().child("info").child("mendax").setValue(mendax.getId());
     }
 
 
@@ -70,4 +76,5 @@ public class Hoster {
         DataBaseManager.rootDatabaseRef.child("Game").child("waiting").child(game.getGameId()).removeValue();
         game.getReference().removeValue();
     }
+
 }

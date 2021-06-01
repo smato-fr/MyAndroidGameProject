@@ -57,6 +57,7 @@ public class GameActivity extends AppCompatActivity implements Updater {
 
     public void onPlay() {
 
+
         game.removeAllViews();
         gameView = new GameView(this, getIntent().getStringExtra("id"), getIntent().getBooleanExtra("host", false));
         game.addView(gameView);

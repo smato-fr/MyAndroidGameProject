@@ -43,7 +43,28 @@ public class Client {
                 else if (state == GameState.playing) {
                     game.onPlay();
                     ref.child("infos").child("state").removeEventListener(this);
+                    play();
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void play() {
+
+        ref.child("infos").child("mendax").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String mendaxId = snapshot.getValue(String.class);
+                if (game.getPlayer().getId().equals(mendaxId))
+                    game.getPlayer().setMendax(true);
+
             }
 
             @Override
@@ -75,4 +96,5 @@ public class Client {
             });
 
     }
+
 }

@@ -415,6 +415,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
     }
 
 
+    @Override
     public Player getPlayer() {
         return player;
     }
@@ -490,6 +491,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         getMapManager().resize(screenWidth, screenHeight);
         movePlayer();
     }
+
 
 
 }

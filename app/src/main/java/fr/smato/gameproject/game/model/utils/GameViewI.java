@@ -53,4 +53,5 @@ public interface GameViewI {
     void sendMessage(String id, String msg);
 
     PlayerList getPlayers();
+    Player getPlayer();
 }

@@ -470,4 +470,10 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
     public PlayerList getPlayers() {
         return players;
     }
+
+    @Override
+    public Player getPlayer() {
+        return null;
+    }
+
 } // class GameView

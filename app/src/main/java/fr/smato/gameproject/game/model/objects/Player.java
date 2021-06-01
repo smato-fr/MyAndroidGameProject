@@ -41,6 +41,9 @@ public class Player {
     private Map<String, Object> datas = new HashMap<>();
 
 
+    private boolean mendax;
+
+
     public Player(GameViewI game, String id, String room, boolean selfUser) {
         this.game = game;
         this.id = id;
@@ -153,5 +156,9 @@ public class Player {
 
     public Map<String, Object> getDatas() {
         return datas;
+    }
+
+    public void setMendax(boolean b) {
+        mendax = true;
     }
 }
