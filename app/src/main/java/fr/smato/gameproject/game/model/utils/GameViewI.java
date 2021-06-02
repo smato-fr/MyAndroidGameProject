@@ -36,9 +36,6 @@ public interface GameViewI {
     //client
     GameState getState();
     void setState(GameState state);
-    void onWait();
-    void onStart();
-    void onPlay();
 
     //other
     MapManager getMapManager();

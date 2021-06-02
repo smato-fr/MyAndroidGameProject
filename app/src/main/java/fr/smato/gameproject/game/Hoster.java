@@ -2,11 +2,14 @@ package fr.smato.gameproject.game;
 
 import android.widget.Button;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import fr.smato.gameproject.DataBaseManager;
+import fr.smato.gameproject.game.model.enums.PlayerRole;
 import fr.smato.gameproject.game.model.objects.Player;
 import fr.smato.gameproject.game.model.utils.GameViewI;
 
@@ -56,19 +59,39 @@ public class Hoster {
                     timer--;
                 }
 
-                play();
+                game.getReference().child("infos").child("state").setValue("playing");
             }
         }, "game-start").start();
     }
 
-    private void play() {
+    public void play() {
 
-        game.getReference().child("infos").child("state").setValue("playing");
+        List<Player> players = new ArrayList<>();
+        players.addAll(game.getPlayers());
+        players.add(game.getPlayer());
+
 
         Random r = new Random();
 
-        Player mendax = game.getPlayers().get(r.nextInt(game.getPlayers().size()));
+        Player mendax = players.get(r.nextInt(players.size()));
         game.getReference().child("info").child("mendax").setValue(mendax.getId());
+
+
+        List<PlayerRole> rolesGiven = new ArrayList<>();
+
+        for (Player pls: players) {
+            PlayerRole role;
+
+            do {
+                role = PlayerRole.values()[r.nextInt(PlayerRole.values().length)];
+            } while (rolesGiven.contains(role));
+
+            rolesGiven.add(role);
+            pls.setRole(role.getRole());
+        }
+
+
+
     }
 
 

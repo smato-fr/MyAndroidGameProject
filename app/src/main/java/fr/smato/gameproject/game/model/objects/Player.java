@@ -145,6 +145,13 @@ public class Player {
         this.room = room;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public void destroy() {
         this.valid = false;
@@ -161,4 +168,6 @@ public class Player {
     public void setMendax(boolean b) {
         mendax = true;
     }
+
+
 }

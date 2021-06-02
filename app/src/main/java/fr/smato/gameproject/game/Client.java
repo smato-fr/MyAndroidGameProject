@@ -32,18 +32,17 @@ public class Client {
                 GameState state = GameState.getByName(snapshot.getValue(String.class));
 
                 if (state == GameState.waiting) {
-                    game.onWait();
+                    ((WaitingGameView) game).onWait();
                 }
 
                 else if (state == GameState.starting) {
-                    game.onStart();
+                    ((WaitingGameView) game).onStart();
                     start();
                 }
 
                 else if (state == GameState.playing) {
-                    game.onPlay();
+                    ((WaitingGameView) game).onPlay();
                     ref.child("infos").child("state").removeEventListener(this);
-                    play();
                 }
             }
 
@@ -55,14 +54,14 @@ public class Client {
 
     }
 
-    private void play() {
+    public void play() {
 
         ref.child("infos").child("mendax").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 String mendaxId = snapshot.getValue(String.class);
-                if (game.getPlayer().getId().equals(mendaxId))
+                if (mendaxId != null && game.getPlayer().getId().equals(mendaxId))
                     game.getPlayer().setMendax(true);
 
             }

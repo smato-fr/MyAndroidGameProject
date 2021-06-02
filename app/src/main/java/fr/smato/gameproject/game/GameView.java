@@ -92,7 +92,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
 
         this.mapManager = new MapManager(this, new FirstGameLevel(this));
 
-        player = new Player(this, gameId, getMapManager().getLevel().getRoomName(), true);
+        player = new Player(this, DataBaseManager.currentUser.getId(), getMapManager().getLevel().getRoomName(), true);
 
         //init drawables
         joyStick = new JoyStick(getContext(), this);
@@ -161,10 +161,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         //load hoster if is
         if (host) {
             hoster = new Hoster(this);
+            hoster.play();
         }
 
         //load client
         client = new Client(this);
+        client.play();
 
         setFocusable(true);
     }
@@ -207,8 +209,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
             e.update();
         }
 
-        //update game
-        updateGame();
     }
 
 
@@ -235,8 +235,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         drawUPS(canvas);
         drawFPS(canvas);
 
-        //draw game
-        drawGame(canvas);
     }
 
 
@@ -368,22 +366,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
     }
 
 
-    //TODO GAME MANAGER
-    @Override
-    public void onWait() {
-
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onPlay() {
-
-    }
-
     @Override
     public GameState getState() {
         return state;
@@ -401,18 +383,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
         return mapManager;
     }
 
-
-    private void updateGame() {
-
-
-
-    }
-
-    private void drawGame(Canvas canvas) {
-
-
-
-    }
 
 
     @Override
