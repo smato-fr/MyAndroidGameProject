@@ -360,6 +360,11 @@ public class WaitingGameView extends SurfaceView implements SurfaceHolder.Callba
         map.put("y", player.getY()/screenHeight);
         map.put("room", getMapManager().getLevel().getRoomName());
         reference.child("players").child("list").child(DataBaseManager.currentUser.getId()).child("location").updateChildren(map);
+
+        float vx = (float) (player.getX() - screenWidth/2);
+        float vy = (float) (player.getY() - screenHeight/2);
+
+        getMapManager().getLevel().setTranslation(vx, vy);
     }
 
     @Override
