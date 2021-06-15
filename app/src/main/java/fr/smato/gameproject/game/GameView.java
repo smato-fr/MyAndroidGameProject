@@ -57,6 +57,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Gam
     private MapManager mapManager;
     private boolean inited = false;
 
+
+
+    //test
     public static GameView INSTANCE;
 
     private DatabaseReference reference;
