@@ -75,16 +75,17 @@ public class Entity {
         if (translated)
             drawT(canvas);
         else
-            canvas.drawCircle((float) location.x, (float) location.y, circleRadious, paint);
+            draw_(canvas);
+    }
+
+    protected void draw_(Canvas canvas) {
+        canvas.drawCircle((float) location.x, (float) location.y, circleRadious, paint);
     }
 
     protected void drawT(Canvas canvas) {
         canvas.drawCircle((float) location.x - game.getMapManager().getLevel().getCameraTranslationX(), (float) location.y - game.getMapManager().getLevel().getCameraTranslationY(), circleRadious, paint);;
     }
 
-    protected void drawTI(Canvas canvas, Bitmap image) {
-        canvas.drawBitmap(image, (float) location.x - game.getMapManager().getLevel().getCameraTranslationX(), (float) location.y  - game.getMapManager().getLevel().getCameraTranslationY(), null);
-    }
 
     public boolean isTouched(double currentX, double currentY) {
 

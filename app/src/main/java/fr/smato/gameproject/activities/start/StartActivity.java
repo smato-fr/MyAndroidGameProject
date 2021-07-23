@@ -26,9 +26,6 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        //check internet connection
-
-
 
         //check if connected
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();

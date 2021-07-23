@@ -45,6 +45,8 @@ public class DataBaseManager {
     private static boolean connected = false;
     public static void updateData(final Updater currentActivity) {
 
+
+
         //check connexion
         DatabaseReference connectedRef = rootDatabaseRef.child(".info/connected");
         connectedRef.addValueEventListener(new ValueEventListener() {

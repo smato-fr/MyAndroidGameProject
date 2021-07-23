@@ -67,7 +67,7 @@ public class Chest extends LevelEntity implements Interactive {
 
     @Override
     public void draw(Canvas canvas) {
-        super.drawTI(canvas, image);
+       // super.drawTI(canvas, image);
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
@@ -54,25 +55,22 @@ public class MainActivity extends AppCompatActivity implements Updater {
 
 
         BottomNavigationView nav = findViewById(R.id.nav_main);
-        nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
+        nav.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
 
-                    case R.id.profile_page:
-                        loadFragment(new ProfileMainFragment(MainActivity.this));
-                        return true;
-                    case R.id.play_page:
-                        loadFragment(new PlayMainFragment(MainActivity.this));
-                        return true;
-                    case R.id.social_page:
-                        loadFragment(socialMainFragment);
-                        return true;
+                case R.id.profile_page:
+                    loadFragment(new ProfileMainFragment(MainActivity.this));
+                    return true;
+                case R.id.play_page:
+                    loadFragment(new PlayMainFragment(MainActivity.this));
+                    return true;
+                case R.id.social_page:
+                    loadFragment(socialMainFragment);
+                    return true;
 
-                }
-
-                return false;
             }
+
+            return false;
         });
 
 
